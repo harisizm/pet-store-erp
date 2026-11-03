@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Not noupdate: hardening must re-run on every upgrade, in case an upgrade re-enabled something. -->
+    <function model="hisabkar.privacy" name="_harden"/>
+</odoo>

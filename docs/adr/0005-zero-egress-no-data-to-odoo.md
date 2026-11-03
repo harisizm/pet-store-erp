@@ -40,26 +40,44 @@ The default is **zero egress**. Data leaves only through integrations the shop h
 enabled, each one on an allowlist. Five layers enforce it, so that no single mistake leaks.
 
 1. **Module layer (`hisabkar_privacy`).**
-   - At install and on every upgrade, uninstall `iap`, `iap_mail`, `sms`, `snailmail`,
-     `snailmail_account`, `partner_autocomplete`, `web_unsplash`, `pos_sms`, `stock_sms`,
-     `sale_sms`, and any module whose name matches `*_iap*`.
-   - Refuse any later install of them (override in `ir.module.module`).
+   - At the end of every install or update pass, uninstall the blocked modules:
+     - `iap`, `iap_mail`, `sms`, `snailmail`, `snailmail_account`, `partner_autocomplete`,
+       `web_unsplash`, `pos_sms`, `stock_sms`, `sale_sms`;
+     - `account_edi_proxy_client`, `account_peppol` and `iap_crm`, which talk to vendor proxies;
+     - any module whose name matches `*_iap*`.
+   - Set `auto_install = False` on them, re-applied after every module-list refresh, so upstream's
+     auto-install loop never selects them.
+   - Refuse explicit installs of them (`ir.module.module` overrides).
 2. **Code layer (`hisabkar_privacy`).**
-   - Neutralise `publisher_warranty.contract` (no-op methods, cron deactivated).
-   - Disable Gravatar lookups and link previews.
-   - Install a server-wide **egress guard** (`post_load` hook), the only sanctioned monkey-patch.
+   - Neutralise `publisher_warranty.contract`: no-op methods, cron deactivated.
+   - Disable Gravatar lookups.
+   - Disable link previews everywhere: chatter, the `/mail/link_preview` route, the html editor's
+     `/html_editor/link_preview_*` routes, and the client flag.
+   - Install a process-wide **egress guard**, the only sanctioned monkey-patch. It is installed when
+     the module's Python package is imported, which happens at server start because the module is
+     in `server_wide_modules`.
      - It wraps outbound connections at the socket level.
-     - Allowed: loopback, the configured DB host, the configured SMTP host, and hosts listed in
-       `hisabkar_egress_allowlist` in `odoo.conf`.
+     - It turns HTTP proxies off (`NO_PROXY=*`), so a proxy cannot hide the real destination.
+     - Allowed: loopback, the `smtp_server` from the config file, and hosts listed in
+       `hisabkar_egress_allowlist`. A mail relay configured only in the UI (`ir.mail_server`) must
+       also be allowlisted.
      - `*.odoo.com` is **always** denied, even if allowlisted.
      - Every blocked attempt is logged with its caller and raises a clear error.
+     - Limits: lookups through `gethostbyname`, UDP `sendto`, and code outside Python sockets are not
+       covered. Layer 5 covers them.
 3. **Config layer.** `scripts/setup-dev.ps1` and the production and on-premise configs set
    `publisher_warranty_url` to an unroutable local address. SaaS also sets `list_db = False`.
 4. **Browser layer.**
-   - `hisabkar_privacy` sends a Content-Security-Policy header on every response: `default-src 'self'`,
-     with `img-src` and `connect-src` limited to `'self'`, `data:` and `blob:`.
+   - `hisabkar_privacy` sends a Content-Security-Policy on every page and error page:
+     - `default-src 'self'`;
+     - `img-src` and `connect-src` limited to `'self'`, `data:`, `blob:` and our own websocket.
+   - A stricter upstream policy, such as `default-src 'none'` on file downloads, is never loosened.
+   - Violations are reported to our own server (`/hisabkar/csp-report`) and logged; nothing goes to
+     a third party.
    - The web client and POS therefore cannot fetch from Odoo, Gravatar, Unsplash, YouTube or CDNs.
    - Fonts and assets are self-hosted.
+   - Routes served without a database (the database manager) carry no policy; production sets
+     `list_db = False`, which closes them.
 5. **Network layer.**
    - **SaaS (Linux cloud host):** a default-deny egress firewall with an explicit allowlist (Meta
      WhatsApp API, FBR, the shop's WooCommerce/Shopify hosts, SMTP relay), plus a DNS sinkhole for
@@ -78,6 +96,23 @@ enabled, each one on an allowlist. Five layers enforce it, so that no single mis
 ## Consequences
 - Odoo's SMS, snail mail, partner autocomplete and stock-photo features are unavailable. WhatsApp
   comes through the OCA Meta Cloud API module instead, allowlisted per shop.
+- **Collateral blocking.** These modules depend on a blocked one, so they cannot be installed:
+  - `base_automation` (automation rules; depends on `sms`);
+  - `hr_presence`;
+  - `l10n_in*` and `l10n_it_edi*`;
+  - OCA `report_label`.
+
+  None is in our Phase 1 set. If one becomes necessary, it needs an ADR, either a glue module
+  that drops the dependency or a reviewed exception.
+- **Module-store downloads.** `base_import_module` (auto-installed) can fetch apps from
+  `apps.odoo.com`; the guard's deny-list blocks it. Our modules are deployed from our own repos.
+- **Recorded exception: `auto_install: True` on `hisabkar_privacy`.** It must be on every database.
+  Auto-install does not fire on a database whose dependencies were installed earlier, so
+  installers and setup scripts install it explicitly as well. Because it is server-wide, it
+  cannot be uninstalled from the UI.
+- **POS hardware.** `connect-src` stops the browser from calling LAN hardware directly (Epson ePOS
+  printers, the IoT hardware proxy). Printing goes through the OS print dialog (NFR-CMP-002). A
+  network printer integration would need that printer's address added to the policy.
 - Every new integration costs an allowlist entry, a test and a line in `docs/09` describing what
   leaves.
 - Upstream upgrades must rerun the egress audit (grep plus test), because new Odoo versions may add

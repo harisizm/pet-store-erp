@@ -44,6 +44,7 @@
 ## 3. Hisabkar routes (planned)
 | Route | Type / auth | Purpose | Idempotency | Requirement | Phase |
 |---|---|---|---|---|---|
+| `POST /hisabkar/csp-report` | http / none, no CSRF (browsers send it) | Receives Content-Security-Policy violation reports; logs them as a warning; returns 204. Body capped at 16 KB. **Built** (`hisabkar_privacy`). | n/a (log only) | NFR-SEC-007 | P0 |
 | `GET /hisabkar/r/<token>` | http / public | E-receipt page (unguessable token) | n/a (read) | FR-POS-009 | P1 |
 | `GET /hisabkar/s/<token>` | http / public | Customer statement page | n/a | FR-CUS-004 | P1 |
 | `POST /hisabkar/v1/khata/collect` | jsonrpc / user | Record a khata payment from the POS (creates `account.payment`) | client `uuid` | FR-CUS-003, FR-POS-002 | P1 |

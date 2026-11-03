@@ -25,6 +25,7 @@
 | Tenant settings (FR-ADM-007) | `res.config.settings` / `ir.config_parameter`; `account.cash.rounding`; company tax settings | Negative-stock policy, discount limit per group | `hisabkar_settings` (P) |
 | Feature flags (FR-ADM-008) | Installed modules (`hisabkar_pet` = pet pack) + settings booleans | none | none |
 | Audit log (FR-ADM-009) | `mail.thread` tracking (`tracking=True`) + OCA `auditlog` (before/after values) | Auditlog rules for business models, created by data | `hisabkar_audit_oca` (G) |
+| Zero egress (NFR-SEC-005..007) | none (upstream phones home) | `hisabkar.privacy` (abstract, hardening on install/upgrade); overrides on `ir.module.module`, `ir.model.data`, `publisher_warranty.contract`, `mail.link.preview`, `res.partner`, `ir.http`; no stored data | `hisabkar_privacy` (P) |
 
 ## 2. Catalog (CAT)
 | SRS concept | Odoo | Hisabkar addition | Module |
