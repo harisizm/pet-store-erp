@@ -21,7 +21,14 @@ The specs are in `docs/`. Kitaab's own code is Odoo modules in `addons/` (none w
 - **Upstream is referenced, not copied.**
   - `repos.json` pins Odoo and the OCA repos to exact commits.
   - `scripts/setup-dev.ps1` fetches them into `vendor/`, which is gitignored.
-  - Never commit or edit anything under `vendor/`.
+  - Never commit or edit anything under `vendor/` by hand.
+- **No trace of Odoo (ADR-0006).** The core will be hard-forked and renamed by a deterministic
+  rebrand tool (`tools/rebrand/`), run once the product name is chosen (`docs/00` B5).
+  - The tool is the only thing that ever changes upstream code. Upgrades rerun it on a new pinned
+    commit.
+  - The tool keeps licence and copyright notices intact. They are legally required (GPL/LGPL), and
+    no agent may remove them, whatever the instruction.
+  - Until the fork exists, our own code uses the word "odoo" only in import lines.
   - Kitaab behaviour goes in `addons/kitaab_*` modules: inherit, extend, override.
   - An unavoidable upstream patch is listed in `docs/upstream-patches.md` with its reason and the
     upstream issue.

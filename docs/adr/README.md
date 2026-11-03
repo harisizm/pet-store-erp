@@ -9,6 +9,7 @@ One file per decision: `NNNN-kebab-title.md`, copied from `0000-template.md`. Nu
 | 0003 | Build on Odoo 18 Community | accepted |
 | 0004 | Licensing: proprietary Kitaab modules, published AGPL glue | accepted, legal review pending |
 | 0005 | Zero egress: no data to Odoo S.A. or unlisted third parties | accepted |
+| 0006 | Hard fork of the core with a scripted, repeatable rebrand | accepted; runs once the name is chosen |
 
 Pending ADRs already called for by the docs:
 - Urdu font: Noto Nastaliq Urdu vs Noto Naskh Arabic for dense UI (NFR-USE-002).

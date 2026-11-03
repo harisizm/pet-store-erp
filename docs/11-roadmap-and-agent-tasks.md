@@ -5,6 +5,18 @@
 > first unticked task whose dependencies are ticked. Tick it, with the commit hash, when done.
 
 ## Phase 0 — Foundation (before any feature)
+- [ ] **P0-0 Product name + tagline.** The founder supplies candidates; we check pronunciation,
+  conflicts and domains (`00` B5). Then rename "Kitaab" and the `kitaab_*` prefix across this repo.
+  Blocks P0-R.
+- [ ] **P0-R Rebrand tool (ADR-0006).** Build `tools/rebrand/`:
+  - inputs: pinned upstream (Odoo + OCA);
+  - outputs: renamed forks;
+  - a mapping table, preserving notices, adding modification notices;
+  - the "no odoo outside the legal allowlist" gate over source, UI, PDFs, emails, HTTP responses
+    and installer.
+
+  Record the occurrence count it handles. Depends on P0-0 and P0-1. After it lands, point
+  `repos.json` at the forks.
 - [ ] **P0-1 First boot.** The founder creates the DB role:
   `scripts\setup-dev.ps1 -SkipPython -CreateDbRole` (needs the postgres superuser password).
   - Then create `kitaab_dev` with `point_of_sale, stock, purchase, account, product_expiry,
@@ -26,11 +38,10 @@
 - [ ] **P0-4 Design system.** Run `/design-consultation` → `DESIGN.md`, approved by the founder.
   It must cover a Latin + Urdu type pairing (closes NFR-USE-002's ADR), tokens, the POS density
   rules and the anti-slop rules.
-- [ ] **P0-5 `kitaab_theme` + debranding.** Turn the tokens into SCSS/CSS variables for the backend
-  and the POS. Remove every user-facing "Odoo" mention (title, login, about, emails, PDFs, links).
-  ADR-0004 / `docs/AGENTS.md` §1.14.
-  - Depends on P0-4.
-  - Done when: a grep of the rendered pages and PDFs finds no "Odoo" and `design-fix` is clean.
+- [ ] **P0-5 `kitaab_theme`.** Turn the tokens into SCSS/CSS variables for the backend and the POS,
+  with our logo, favicon and typography.
+  - Depends on P0-4 and P0-R. Debranding itself is done by the rebrand tool.
+  - Done when: P0-R's gate is green on rendered pages and PDFs, and `design-fix` is clean.
 - [ ] **P0-6 `kitaab_l10n_ur`.** Add the `ur_PK` language (RTL) and set up the translation workflow
   and `scripts/check-i18n.py`. First target: 100% of the POS screen strings.
 - [ ] **P0-7 On-premise spike.** Covers C4 and NFR-AVL-002.

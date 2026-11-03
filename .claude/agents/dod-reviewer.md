@@ -38,8 +38,10 @@ Check, citing `file:line` for every finding:
    - Any `Other proprietary` module that reaches an `AGPL-3` module, or imports from one, is a
      BLOCKER.
    - Glue modules must be `AGPL-3`.
-4. **Trademark (§1.14).** New user-visible "Odoo" text in views, templates, emails, reports or
-   assets is a BLOCKER.
+4. **No trace of Odoo (§1.14, ADR-0006).** BLOCKER for:
+   - new user-visible "Odoo" text in views, templates, emails, reports, assets, URLs or headers;
+   - the word "odoo" in our code outside `import`/`from` lines;
+   - any removed or altered licence or copyright notice.
 5. **Zero egress (§1.15).**
    - Look for new `requests`/`urllib`/`http.client`/socket use, new URLs, and new dependencies on
      the IAP family.

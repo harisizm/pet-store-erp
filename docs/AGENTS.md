@@ -77,9 +77,16 @@
     - Anything that needs an OCA AGPL module goes in a separate thin glue module, licensed
       `AGPL-3`, whose source we publish.
     - Never copy, port or read-to-reimplement Odoo Enterprise code (OEEL-1).
-14. **Trademark.** The product is Kitaab. The "Odoo" name and logo appear nowhere a user sees:
-    titles, login page, emails, receipts, PDFs, the about dialog, domains or marketing.
-    Copyright and licence notices inside source files stay untouched.
+14. **No trace of Odoo (ADR-0006).**
+    - The "Odoo" name and logo appear nowhere a user sees: titles, login page, URLs, emails,
+      receipts, PDFs, the about dialog, HTTP headers, installer, service names, domains or
+      marketing.
+    - In our own code, the word appears only in `import`/`from` lines until the rebrand tool
+      rewrites those too.
+    - **Licence and copyright notices are never removed or altered**, in our code or upstream.
+      That includes `LICENSE`, `COPYRIGHT`, "Part of Odoo. See LICENSE file…" headers and author
+      copyright lines. Removing them is copyright infringement. They are the only permitted
+      remaining trace and live only in source files and the legal-notices document.
 15. **Zero egress to Odoo S.A. (ADR-0005, NFR-SEC-005..007).**
     - Nothing may send data to `*.odoo.com` or to any third party unless the integration is
       explicitly allowlisted.
