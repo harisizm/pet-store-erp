@@ -40,7 +40,8 @@ Check, citing `file:line` for every finding:
    - Glue modules must be `AGPL-3`.
 4. **No trace of Odoo (§1.14, ADR-0006).** BLOCKER for:
    - new user-visible "Odoo" text in views, templates, emails, reports, assets, URLs or headers;
-   - the word "odoo" in our code outside `import`/`from` lines;
+   - the word "odoo" in our code anywhere other than the allowed places in `docs/AGENTS.md` §1.14
+     (imports, the XML `<odoo>` root, the `@odoo-module` marker, the egress deny-list);
    - any removed or altered licence or copyright notice.
 5. **Zero egress (§1.15).**
    - Look for new `requests`/`urllib`/`http.client`/socket use, new URLs, and new dependencies on

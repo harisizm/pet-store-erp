@@ -81,8 +81,19 @@
     - The "Odoo" name and logo appear nowhere a user sees: titles, login page, URLs, emails,
       receipts, PDFs, the about dialog, HTTP headers, installer, service names, domains or
       marketing.
-    - In our own code, the word appears only in `import`/`from` lines until the rebrand tool
-      rewrites those too.
+    - In our own code, the word may appear only where the framework or the law requires it,
+      until the rebrand tool rewrites the framework:
+      - `import`/`from` lines;
+      - the `<odoo>` root tag of XML data files;
+      - the `@odoo-module` marker in JavaScript;
+      - headers and `#. odoo-*` comments that the framework writes into exported `.pot`/`.po`
+        files;
+      - framework identifiers that code must name, such as the `odoo` JavaScript global (e.g.
+        `odoo.isReady`). Logger names are derived from logger objects, never spelled out.
+      - the vendor-domain deny-list in `hisabkar_privacy` (`egress.py` and the tests that prove
+        it), because we cannot block a domain without naming it.
+
+      Nowhere else: not in identifiers, comments, docstrings, user-facing strings or file names.
     - **Licence and copyright notices are never removed or altered**, in our code or upstream.
       That includes `LICENSE`, `COPYRIGHT`, "Part of Odoo. See LICENSE file…" headers and author
       copyright lines. Removing them is copyright infringement. They are the only permitted

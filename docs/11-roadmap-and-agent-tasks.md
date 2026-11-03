@@ -17,7 +17,15 @@
 
   Record the occurrence count it handles. Depends on P0-0 and P0-1. After it lands, point
   `repos.json` at the forks.
-- [ ] **P0-1 First boot.** The founder creates the DB role:
+- [x] **P0-1 First boot.** Done 2026-11-03.
+  - `hisabkar_dev` is installed with the modules below.
+  - The PostgreSQL 18 Windows collation fix is in L-006.
+  - Login was verified by browser test and live request.
+  - Installed modules: account, analytic, barcodes, base, contacts, hr, l10n_pk, mail, payment,
+    point_of_sale, pos_hr, product, product_expiry, purchase, purchase_stock, stock, stock_account,
+    uom, web, and upstream's auto-installed companions, minus the IAP family that P0-2 removes.
+
+  Original task: the founder creates the DB role:
   `scripts\setup-dev.ps1 -SkipPython -CreateDbRole` (needs the postgres superuser password).
   - Then create `hisabkar_dev` with `point_of_sale, stock, purchase, account, product_expiry,
     pos_hr, l10n_pk, contacts`.
@@ -29,6 +37,11 @@
   - Depends on P0-1.
   - Done when: the test passes, and an hour of running shows nothing in the egress log outside the
     allowlist.
+  - **Status 2026-11-03:**
+    - Tests: 24/24 pass on a fresh install plus upgrade.
+    - `dod-reviewer` found 2 blockers and 9 gaps; all are fixed or recorded in ADR-0005.
+    - The one-hour soak on `hisabkar_dev` started at 11:07 UTC (`.odoo-data/p0-2-soak.log`).
+    - Tick this task once the soak log shows zero blocked or attempted outbound connections.
 - [ ] **P0-3 Tooling and CI.** Add:
   - a `pre-commit` config (ruff, pylint-odoo, eslint, prettier);
   - `scripts/check-licences.py`;

@@ -28,7 +28,8 @@ The specs are in `docs/`. Hisabkar's own code is Odoo modules in `addons/` (none
     commit.
   - The tool keeps licence and copyright notices intact. They are legally required (GPL/LGPL), and
     no agent may remove them, whatever the instruction.
-  - Until the fork exists, our own code uses the word "odoo" only in import lines.
+  - Until the fork exists, our own code uses the word "odoo" only where the framework or the law
+    requires it (`docs/AGENTS.md` §1.14).
   - Hisabkar behaviour goes in `addons/hisabkar_*` modules: inherit, extend, override.
   - An unavoidable upstream patch is listed in `docs/upstream-patches.md` with its reason and the
     upstream issue.
@@ -188,6 +189,23 @@ Then open `http://localhost:8069`.
 ```powershell
 .venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf -d hisabkar_test -i <module> --test-enable --test-tags /<module> --stop-after-init
 ```
+
+Rules for test runs:
+- **Judge by the log summary**, `odoo.tests.result: N failed, N error(s) of N tests`, never by the
+  exit code. "of 0 tests" is a failure (L-007).
+- **From Git Bash**, prefix the command with `MSYS_NO_PATHCONV=1`. Otherwise Git Bash rewrites
+  `/<module>` into `C:/Program Files/Git/<module>` and Odoo silently selects no tests. PowerShell is
+  unaffected.
+- **Browser tests** need a real Chromium. Install it with `npx playwright install chromium`, then:
+
+  ```powershell
+  $env:ODOO_BROWSER_BIN = "$env:LOCALAPPDATA\ms-playwright\chromium-1234\chrome-win64\chrome.exe"
+  ```
+
+  Edge is not suitable: its launcher process exits early and the test errors on cleanup.
+- **Modules that remove other modules** (`hisabkar_privacy`) are tested in two commands (L-008):
+  1. a fresh `-i` install;
+  2. `-u <module> --test-enable --test-tags /<module>` on that database.
 
 **Upgrade a module after changes:** run the same command as for a fresh database, with
 `-u <module>` in place of `-i <module>`.
