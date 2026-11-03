@@ -14,5 +14,13 @@ coverage/
 # Local Claude Code state; shared config (.claude/agents, skills, design-fix.md) is committed.
 .claude/settings.local.json
 
+# Upstream code fetched by scripts/setup-dev.ps1 at the commits pinned in repos.json.
+vendor/
+.venv/
+# Local Odoo config (holds the dev DB password) and filestore.
+odoo.conf
+.odoo-data/
+__pycache__/
+
 .DS_Store
 Thumbs.db

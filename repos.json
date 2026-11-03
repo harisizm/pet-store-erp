@@ -1,0 +1,21 @@
+{
+  "_comment": "Upstream code Kitaab builds on (ADR-0003). Each repo is fetched at the exact commit below into vendor/<name> by scripts/setup-dev.ps1. To upgrade: change the commit, rerun the script, run the tests, and commit this file.",
+  "python": "3.12",
+  "extraPythonPackages": ["requests_toolbelt"],
+  "repos": [
+    { "name": "odoo", "url": "https://github.com/odoo/odoo.git", "branch": "18.0", "commit": "55f9d29cd13c935226c2b6e48eb661bc89310e8b",
+      "addonsPaths": ["addons", "odoo/addons"], "why": "Odoo 18 Community core (LGPL-3)" },
+    { "name": "social", "url": "https://github.com/OCA/social.git", "branch": "18.0", "commit": "04575913fbf0316fa4118bc437511b9d5c9e77d1",
+      "addonsPaths": ["."], "why": "mail_gateway + mail_gateway_whatsapp: WhatsApp Cloud API (AGPL-3)" },
+    { "name": "pos", "url": "https://github.com/OCA/pos.git", "branch": "18.0", "commit": "fdde64a4a5d9d07c041e7d96d512fb77312d2a43",
+      "addonsPaths": ["."], "why": "pos_product_expiry: block expired lots at the till (AGPL-3)" },
+    { "name": "account-financial-reporting", "url": "https://github.com/OCA/account-financial-reporting.git", "branch": "18.0", "commit": "dbfd1f44cb0c69826cb4e5143f76d45f1e3f5098",
+      "addonsPaths": ["."], "why": "account_financial_report: aged receivables/payables for khata and suppliers (AGPL-3)" },
+    { "name": "reporting-engine", "url": "https://github.com/OCA/reporting-engine.git", "branch": "18.0", "commit": "b311d0504a668bbb5abc79d8bea1126544767917",
+      "addonsPaths": ["."], "why": "report_xlsx: dependency of account_financial_report (AGPL-3)" },
+    { "name": "server-ux", "url": "https://github.com/OCA/server-ux.git", "branch": "18.0", "commit": "38ef311c160d10cf82fbb8f10f809236f1bc7ebe",
+      "addonsPaths": ["."], "why": "date_range: dependency of account_financial_report (LGPL-3)" },
+    { "name": "server-tools", "url": "https://github.com/OCA/server-tools.git", "branch": "18.0", "commit": "cab4a7c9aa7625a64f996cf7bc89d38c708be6dd",
+      "addonsPaths": ["."], "why": "auditlog: before/after audit trail for FR-ADM-009 (AGPL-3, used only via an AGPL glue module)" }
+  ]
+}
