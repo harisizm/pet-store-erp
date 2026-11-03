@@ -85,8 +85,19 @@ Our `<brand>_*` business modules stay proprietary (ADR-0004). They import the re
 - Community answers, tutorials and Odoo documentation no longer match our names one-to-one. The
   tool's mapping table (`tools/rebrand/mapping.*`) is the translation key for developers and agents.
 - Free OCA modules beyond the ones we pinned need a rebrand run before use.
-- The work is sized by the occurrence count recorded in `tools/rebrand/README.md` when the tool is
-  built.
+- **Scale**, measured 2026-11-03 at the pinned commits (case-insensitive "odoo"):
+
+  | Repo | Files | Occurrences | "Part of Odoo. See LICENSE" headers |
+  |---|---|---|---|
+  | odoo | 35,326 | 1,164,743 | 5,974 |
+  | OCA social | 253 | 1,236 | 0 |
+  | OCA pos | 305 | 1,482 | 1 |
+  | OCA account-financial-reporting | 263 | 4,555 | 0 |
+  | OCA reporting-engine | 1,157 | 8,982 | 0 |
+  | OCA server-ux | 749 | 4,869 | 0 |
+  | OCA server-tools | 1,313 | 8,331 | 0 |
+
+  Hand-editing is not an option at this scale; only a rule-based tool with a test gate is.
 - **Before the tool exists:** we develop against plain upstream in `vendor/`, so feature work
   isn't blocked. Our own module code avoids the word except in imports, so switching to the renamed
   package is a mechanical import rewrite, which the tool also applies to our modules.
