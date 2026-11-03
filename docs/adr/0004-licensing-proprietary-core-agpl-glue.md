@@ -1,11 +1,11 @@
-# ADR-0004: Licensing — proprietary Kitaab modules, published AGPL glue
+# ADR-0004: Licensing — proprietary Hisabkar modules, published AGPL glue
 
 - **Status:** accepted (founder, 2026-11-03). **Needs legal review before first paid customer.**
 - **Date:** 2026-11-03
 - **Requirements:** `00` B6 (on-prem + SaaS)
 
 ## Context
-Kitaab will modify the base heavily, host it as paid SaaS, and install it on shop PCs. The founder
+Hisabkar will modify the base heavily, host it as paid SaaS, and install it on shop PCs. The founder
 asked to confirm this is legally safe.
 
 **What was verified on 2026-11-03:**
@@ -26,13 +26,13 @@ asked to confirm this is legally safe.
   - Odoo S.A. and the OCA will not pursue end users who follow these rules.
 
 ## Decision
-- **Proprietary core.** Kitaab business modules are `'license': 'Other proprietary'` under our own
+- **Proprietary core.** Hisabkar business modules are `'license': 'Other proprietary'` under our own
   EULA:
   - khata, FEFO, pet, Urdu, FBR, theme, privacy, and others like them;
   - they depend only on Odoo core (LGPL-3) and LGPL-compatible modules.
 - **AGPL glue.** When a feature needs an OCA AGPL module, the code touching it goes in a separate
   thin module:
-  - named `kitaab_<x>_oca`;
+  - named `hisabkar_<x>_oca`;
   - licensed `'license': 'AGPL-3'`, which pulls in the AGPL obligations below;
   - published in a public repo;
   - containing no business logic of ours beyond the wiring.

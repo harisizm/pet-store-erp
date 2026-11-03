@@ -5,9 +5,9 @@
 ## 1. Test layers
 | Layer | Tool | What it covers | Where |
 |---|---|---|---|
-| Model logic | `odoo.tests.TransactionCase` | Money/qty rounding, FEFO selection, khata balance, idempotency, record rules | `addons/kitaab_*/tests/` |
+| Model logic | `odoo.tests.TransactionCase` | Money/qty rounding, FEFO selection, khata balance, idempotency, record rules | `addons/hisabkar_*/tests/` |
 | UI and POS flows | `odoo.tests.HttpCase` + tours (`start_tour`; POS tours via `/pos/ui`) | The 8 key flows in `08` §4, including offline sale → sync | same |
-| Zero egress | `kitaab_privacy/tests/test_zero_egress.py` | All `kitaab_*` installed, every `ir.cron` triggered, known flows exercised; asserts zero non-allowlisted connection attempts | `kitaab_privacy` |
+| Zero egress | `hisabkar_privacy/tests/test_zero_egress.py` | All `hisabkar_*` installed, every `ir.cron` triggered, known flows exercised; asserts zero non-allowlisted connection attempts | `hisabkar_privacy` |
 | Licence boundaries | Script over all manifests | No `Other proprietary` module depends (transitively) on an AGPL module | `scripts/check-licences.py` (task P0-3) |
 | Translations | Script over `i18n/ur.po` | Untranslated-term count per module; fails if a P1 screen's module drops below its target | `scripts/check-i18n.py` (task P0-6) |
 | Performance | Scripted POS load with 10k products on a 2 GB Android tablet; API timing at volume | NFR-PERF-001..004 | manual + recorded in `docs/perf/` |
@@ -16,9 +16,9 @@
 ## 2. Rules
 - **Tests are part of the module.** A task is not done until its tests pass on a fresh database
   (`docs/AGENTS.md` §3) and the output is quoted.
-- **Use a throwaway database** (`kitaab_test`), never the dev database.
+- **Use a throwaway database** (`hisabkar_test`), never the dev database.
 - **Every requirement ID has at least one test** naming it in its docstring.
-- **Coverage:** at least 80% line coverage on `kitaab_*` domain code: khata, FEFO, inventory, POS
+- **Coverage:** at least 80% line coverage on `hisabkar_*` domain code: khata, FEFO, inventory, POS
   sync (NFR-MNT-002). Measure with `coverage run vendor/odoo/odoo-bin ...`.
 - **Offline replay:** for anything the POS can do offline, a test submits the same payload twice
   and asserts a single effect.
@@ -29,7 +29,7 @@
   already has PostgreSQL.
 - **Steps:**
   1. `scripts/setup-dev.ps1`;
-  2. install all `kitaab_*` modules on a fresh database with `--test-enable`;
+  2. install all `hisabkar_*` modules on a fresh database with `--test-enable`;
   3. the zero-egress test;
   4. the licence and i18n checks;
   5. `pre-commit` (ruff, pylint-odoo, eslint, prettier).

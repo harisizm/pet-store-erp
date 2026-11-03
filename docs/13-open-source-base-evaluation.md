@@ -103,9 +103,9 @@ in a multi-tenant SaaS. On Frappe, the pieces are open source, and the gaps are 
 build anyway.
 
 ## 5. Recommendation and the gate before committing
-**Base:** ERPNext v16 + POS Awesome V15. Kitaab work lives in our own Frappe apps:
-- `kitaab_core`: khata UX, loose-sale UX, Urdu, Pakistani defaults;
-- `kitaab_pet`: pets, live animals, grooming and boarding, restock reminders.
+**Base:** ERPNext v16 + POS Awesome V15. Hisabkar work lives in our own Frappe apps:
+- `hisabkar_core`: khata UX, loose-sale UX, Urdu, Pakistani defaults;
+- `hisabkar_pet`: pets, live animals, grooming and boarding, restock reminders.
 
 Integrate `frappe_whatsapp`, `ecommerce_integrations` and a WooCommerce connector, with `kodlyft/di`
 for FBR later. Upstream stays unpatched (see `AGENTS.md` §0).
@@ -232,11 +232,11 @@ exist for 18.0. `mail_gateway_whatsapp` has no 19.0 branch.
 
 | Module | Covers | Size |
 |---|---|---|
-| `kitaab_l10n_ur` | `ur_PK` language (RTL); Urdu translations of POS, stock, account and sale | Large (translation), one-off; worth contributing upstream |
-| `kitaab_pos_fefo` | Pre-select the earliest-expiry lot with stock, show the expiry on the line, Manager PIN for expired lots (FR-INV-011/012) | Small (about 100–300 lines) |
-| `kitaab_khata` | Collect khata in the POS, statements, `wa.me` reminders (FR-CUS-002..006) | Medium |
-| `kitaab_fbr_pos` | FBR POS fiscalisation, by forking `ol_pos_fbr_connector` (LGPL) or writing our own. Phase 3, optional (`00` P8). | Medium |
-| `kitaab_pet` | Pets, live animals, grooming and boarding, restock reminders | Large (no base has it) |
+| `hisabkar_l10n_ur` | `ur_PK` language (RTL); Urdu translations of POS, stock, account and sale | Large (translation), one-off; worth contributing upstream |
+| `hisabkar_pos_fefo` | Pre-select the earliest-expiry lot with stock, show the expiry on the line, Manager PIN for expired lots (FR-INV-011/012) | Small (about 100–300 lines) |
+| `hisabkar_khata` | Collect khata in the POS, statements, `wa.me` reminders (FR-CUS-002..006) | Medium |
+| `hisabkar_fbr_pos` | FBR POS fiscalisation, by forking `ol_pos_fbr_connector` (LGPL) or writing our own. Phase 3, optional (`00` P8). | Medium |
+| `hisabkar_pet` | Pets, live animals, grooming and boarding, restock reminders | Large (no base has it) |
 
 ### 8.4 Risks to accept
 1. **Windows production limits.** One process, no workers, no memory cap. Right for one shop's

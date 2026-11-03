@@ -5,7 +5,7 @@
 ## Business terms
 | Term | Meaning |
 |---|---|
-| **Khata** | Customer credit ledger. In Kitaab, the partner's receivable lines. |
+| **Khata** | Customer credit ledger. In Hisabkar, the partner's receivable lines. |
 | **Udhaar** | Buying on credit, "on the khata". |
 | **Kiryana** | Neighbourhood grocery shop (a future vertical). |
 | **FEFO** | First-Expiry-First-Out: sell the batch that expires soonest. |
@@ -26,11 +26,11 @@
 |---|---|
 | **Odoo CE / EE** | Community Edition (LGPL-3, what we use) / Enterprise Edition (proprietary, never used). |
 | **OCA** | Odoo Community Association: publishes free modules, mostly AGPL-3. |
-| **Module / addon** | Unit of Odoo functionality with a `__manifest__.py`. Kitaab's are `kitaab_*`. |
-| **Glue module** | A thin AGPL module (`kitaab_*_oca`) that connects us to an OCA AGPL module (ADR-0004). |
+| **Module / addon** | Unit of Odoo functionality with a `__manifest__.py`. Hisabkar's are `hisabkar_*`. |
+| **Glue module** | A thin AGPL module (`hisabkar_*_oca`) that connects us to an OCA AGPL module (ADR-0004). |
 | **IAP** | Odoo's paid in-app services that call `iap.odoo.com`. Excluded (ADR-0005). |
 | **Publisher warranty** | Odoo's daily usage report to `services.odoo.com`. Neutralised (ADR-0005). |
-| **Egress guard** | `kitaab_privacy`'s block on all outbound connections not on the allowlist. |
+| **Egress guard** | `hisabkar_privacy`'s block on all outbound connections not on the allowlist. |
 | **`pos.config` / `pos.session` / `pos.order`** | Till / shift / sale. |
 | **`stock.move` / `stock.quant` / `stock.lot`** | Stock ledger entry / cached balance / batch or serial. |
 | **`account.move`** | Journal entry, invoice or bill. Posted ones are immutable. |

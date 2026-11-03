@@ -1,5 +1,5 @@
 {
-  "_comment": "Upstream code Kitaab builds on (ADR-0003). Each repo is fetched at the exact commit below into vendor/<name> by scripts/setup-dev.ps1. To upgrade: change the commit, rerun the script, run the tests, and commit this file.",
+  "_comment": "Upstream code Hisabkar builds on (ADR-0003). Each repo is fetched at the exact commit below into vendor/<name> by scripts/setup-dev.ps1. To upgrade: change the commit, rerun the script, run the tests, and commit this file.",
   "python": "3.12",
   "extraPythonPackages": ["requests_toolbelt"],
   "repos": [

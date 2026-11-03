@@ -4,7 +4,7 @@
 > the screen **inventory** and key flows. Visual design comes from `DESIGN.md` (task P0-4), and no
 > screen is restyled before it exists (`AGENTS.md` §3).
 >
-> "Stock Odoo" means Odoo's own screen, restyled by `kitaab_theme` and simplified (fields hidden by
+> "Stock Odoo" means Odoo's own screen, restyled by `hisabkar_theme` and simplified (fields hidden by
 > group). "Custom" means a new view or OWL component.
 
 ## 1. POS (till) — hero surface, tablet-first
@@ -12,12 +12,12 @@
 |---|---|---|---|
 | PIN login | Cashier | Stock (`pos_hr`) | FR-ADM-006 |
 | Open shift (opening float) | Cashier | Stock | FR-POS-012 |
-| Sell: search/scan, cart, favourites grid | Cashier | Stock + `kitaab_pos` (shortcuts, Urdu search, loose qty keypad) | FR-POS-003, FR-CAT-009, FR-POS-016 |
-| Lot picker with expiry, FEFO pre-selected | Cashier | Custom (`kitaab_pos_fefo`) | FR-INV-011/012 |
+| Sell: search/scan, cart, favourites grid | Cashier | Stock + `hisabkar_pos` (shortcuts, Urdu search, loose qty keypad) | FR-POS-003, FR-CAT-009, FR-POS-016 |
+| Lot picker with expiry, FEFO pre-selected | Cashier | Custom (`hisabkar_pos_fefo`) | FR-INV-011/012 |
 | Customer pick / quick-add | Cashier | Stock + phone validation | FR-POS-014 |
 | Payment (split, change due, khata) | Cashier | Stock + credit-limit check | FR-POS-005/006 |
 | Manager PIN override | Manager | Custom | FR-POS-004 |
-| Receipt + WhatsApp share | Cashier | Stock receipt (Kitaab layout) + custom share | FR-POS-008/009 |
+| Receipt + WhatsApp share | Cashier | Stock receipt (Hisabkar layout) + custom share | FR-POS-008/009 |
 | Refund / exchange | Cashier | Stock refund + destination choice | FR-POS-010 |
 | Collect khata | Cashier | Custom | FR-CUS-003 |
 | Cash in/out, close shift by denomination | Cashier | Stock | FR-POS-012 |
@@ -26,7 +26,7 @@
 ## 2. Owner on phone
 | Screen | Source | Requirements |
 |---|---|---|
-| Dashboard: today/week/month sales, gross profit, bills, average bill, cash expected, khata outstanding, low-stock count, near-expiry value, top 10 items, sales by hour | Custom (`kitaab_reports`) | FR-RPT-001 |
+| Dashboard: today/week/month sales, gross profit, bills, average bill, cash expected, khata outstanding, low-stock count, near-expiry value, top 10 items, sales by hour | Custom (`hisabkar_reports`) | FR-RPT-001 |
 | Khata list (oldest first) → statement → reminder | Custom | FR-CUS-004..006 |
 | Near-expiry list (30/60/90) | Custom | FR-INV-013, FR-RPT-005 |
 | Low stock → create PO | Stock replenishment, simplified | FR-INV-030 |
@@ -34,13 +34,13 @@
 ## 3. Back office (desktop)
 | Area | Screens | Source |
 |---|---|---|
-| Catalog | Items list/form (simplified), import with template, barcode labels, price history | Stock + `kitaab_catalog` |
-| Stock | On hand by branch/lot, counts (session, variance, approve), adjustments with reason, expiry write-off, negative-stock review | Stock + `kitaab_inventory` |
+| Catalog | Items list/form (simplified), import with template, barcode labels, price history | Stock + `hisabkar_catalog` |
+| Stock | On hand by branch/lot, counts (session, variance, approve), adjustments with reason, expiry write-off, negative-stock review | Stock + `hisabkar_inventory` |
 | Purchasing | Suppliers, PO, receive with lot/expiry, bills, payments, returns, payables aging | Stock + aging glue |
-| Customers | Customer list with balance, statement, merge duplicates | Stock + `kitaab_khata` |
+| Customers | Customer list with balance, statement, merge duplicates | Stock + `hisabkar_khata` |
 | Money | Expenses quick entry, cash book, bank/wallet journals | Custom + stock |
-| Reports | Sales by day/item/category/brand/method/staff/customer, gross profit, stock valuation, slow movers, Z-report history, discounts/overrides, item card | `kitaab_reports` |
-| Settings | Users and roles, cashier PINs, devices, branches, discount limits, negative-stock policy, cash rounding, receipt header/footer | Stock settings + `kitaab_settings` |
+| Reports | Sales by day/item/category/brand/method/staff/customer, gross profit, stock valuation, slow movers, Z-report history, discounts/overrides, item card | `hisabkar_reports` |
+| Settings | Users and roles, cashier PINs, devices, branches, discount limits, negative-stock policy, cash rounding, receipt header/footer | Stock settings + `hisabkar_settings` |
 
 ## 4. Key flows
 Each flow is an HttpCase tour, as required by the DoD.

@@ -17,17 +17,17 @@
 ## 2. Identity and access
 - **Back-office login:** Odoo users with `auth_totp` 2FA required for Owner/Manager/Accountant.
   Phone + OTP is OPEN (`00` T5) and must not use Odoo's IAP SMS.
-- **Cashiers:** `pos_hr` employee PIN on a registered device (`kitaab.pos.device`). Five failures
+- **Cashiers:** `pos_hr` employee PIN on a registered device (`hisabkar.pos.device`). Five failures
   lock that employee on that device for 5 minutes (FR-ADM-006). A device can be revoked remotely
   (NFR-SEC-004).
-- **Permissions:** the SRS §12 matrix is implemented as `kitaab_*` groups. Branch isolation uses
+- **Permissions:** the SRS §12 matrix is implemented as `hisabkar_*` groups. Branch isolation uses
   record rules on warehouse, POS config, session, order and picking, each with a test.
 - **Integration users:** a dedicated user per integration with minimal groups and an API key. No
   shared admin credentials.
 
 ## 3. Zero egress: no data to Odoo S.A. (NFR-SEC-005..007)
 Full design and audit evidence: ADR-0005. Summary:
-1. **Module layer.** `kitaab_privacy` removes `iap`, `iap_mail`, `sms`, `snailmail*`,
+1. **Module layer.** `hisabkar_privacy` removes `iap`, `iap_mail`, `sms`, `snailmail*`,
    `partner_autocomplete`, `web_unsplash` and `*_sms`, and blocks their reinstall.
 2. **Code layer.** The publisher-warranty call is neutralised. Gravatar and link previews are off.
    A socket-level egress guard denies all non-allowlisted hosts and always denies `*.odoo.com`.
@@ -40,7 +40,7 @@ Full design and audit evidence: ADR-0005. Summary:
 | Data | Leaves to | When | Basis |
 |---|---|---|---|
 | Nothing | Odoo S.A. | Never | NFR-SEC-005 |
-| Customer phone + message parameters | Meta (WhatsApp Cloud API) | P2, only for opted-in customers (`kitaab_wa_opt_in`) | FR-CUS-001/006 |
+| Customer phone + message parameters | Meta (WhatsApp Cloud API) | P2, only for opted-in customers (`hisabkar_wa_opt_in`) | FR-CUS-001/006 |
 | Email address + PDF | Deployment SMTP relay | Statements and digests | FR-CUS-004, FR-RPT-013 |
 | SKU + stock qty; orders in | The shop's own WooCommerce/Shopify | P2, when a channel is connected | FR-ORD-006 |
 | Consignee details, COD | Courier | P3, per shipment | FR-ORD-004 |
@@ -52,7 +52,7 @@ Tenant data export (CSV/JSON zip) is available on request within 24 h (NFR-DAT-0
 
 ## 5. Licensing compliance (ADR-0004)
 - **Our modules:** business modules are `Other proprietary` and depend only on LGPL core. AGPL glue
-  modules (`kitaab_*_oca`) are published.
+  modules (`hisabkar_*_oca`) are published.
 - **On-premise installers ship:**
   - the LGPL notice and an offer of the (unmodified) Odoo source;
   - the AGPL source offer for OCA and glue modules;

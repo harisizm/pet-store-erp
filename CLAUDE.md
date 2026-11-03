@@ -1,4 +1,4 @@
-# CLAUDE.md — Kitaab ERP
+# CLAUDE.md — Hisabkar ERP
 
 The shared rules for every agent are imported below; this file only adds what is specific to Claude Code.
 

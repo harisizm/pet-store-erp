@@ -1,14 +1,14 @@
-# AGENTS.md — Kitaab ERP
+# AGENTS.md — Hisabkar ERP
 
 Entry point for every coding agent (Claude Code, Codex, Cursor, Copilot, and others). Claude Code
 also reads `CLAUDE.md`, which imports this file.
 
-Kitaab is a retail ERP + POS for small shops in Pakistan, with pet retail as the first vertical
+Hisabkar is a retail ERP + POS for small shops in Pakistan, with pet retail as the first vertical
 pack. It is built on **Odoo 18 Community** and ships two ways:
 - installed on a shop's own Windows PC, working offline;
 - as cloud SaaS.
 
-The specs are in `docs/`. Kitaab's own code is Odoo modules in `addons/` (none written yet).
+The specs are in `docs/`. Hisabkar's own code is Odoo modules in `addons/` (none written yet).
 
 ## 0. Build strategy: extend Odoo, never fork it
 - **Decision trail (2026-11-03):**
@@ -23,13 +23,13 @@ The specs are in `docs/`. Kitaab's own code is Odoo modules in `addons/` (none w
   - `scripts/setup-dev.ps1` fetches them into `vendor/`, which is gitignored.
   - Never commit or edit anything under `vendor/` by hand.
 - **No trace of Odoo (ADR-0006).** The core will be hard-forked and renamed by a deterministic
-  rebrand tool (`tools/rebrand/`), run once the product name is chosen (`docs/00` B5).
+  rebrand tool (`tools/rebrand/`) that renames it to Hisabkar (roadmap task P0-R).
   - The tool is the only thing that ever changes upstream code. Upgrades rerun it on a new pinned
     commit.
   - The tool keeps licence and copyright notices intact. They are legally required (GPL/LGPL), and
     no agent may remove them, whatever the instruction.
   - Until the fork exists, our own code uses the word "odoo" only in import lines.
-  - Kitaab behaviour goes in `addons/kitaab_*` modules: inherit, extend, override.
+  - Hisabkar behaviour goes in `addons/hisabkar_*` modules: inherit, extend, override.
   - An unavoidable upstream patch is listed in `docs/upstream-patches.md` with its reason and the
     upstream issue.
 - **Where it runs:**
@@ -76,7 +76,7 @@ Every task, however small, runs this loop. Skipping a step is a reported deviati
 4. **Plan.** Non-trivial or ambiguous work: put the decision to the founder as a short
    multiple-choice question grounded in what you found. Build only after the answer. Small,
    unambiguous work: proceed and state your assumption.
-5. **Build.** In a `kitaab_*` module, following `docs/AGENTS.md` §2. Tests are written alongside.
+5. **Build.** In a `hisabkar_*` module, following `docs/AGENTS.md` §2. Tests are written alongside.
 6. **Verify.** Run the module's tests (`docs/AGENTS.md` §2), upgrade the module on a fresh database,
    and for UI run the design audit. Quote the real output. "Should work" is not a result.
 7. **Review.** Walk `docs/AGENTS.md` §3 Definition of Done line by line, or run the `dod-reviewer`
@@ -86,13 +86,13 @@ Every task, however small, runs this loop. Skipping a step is a reported deviati
 9. **Report.** What changed, which IDs, the verification output, and anything left undone.
 
 ## 3. Design: no AI slop, from the first screen
-Kitaab is a working tool used all day by cashiers on cheap Android tablets and old Windows PCs. It
+Hisabkar is a working tool used all day by cashiers on cheap Android tablets and old Windows PCs. It
 should look like a well-made instrument, not stock Odoo and not a SaaS template.
 
 - **No UI work before `DESIGN.md` exists** at the repo root, approved by the founder. It is produced
   with the `design-consultation` skill and is the design authority alongside `docs/08-ux-and-screens.md`.
 - **Tokens only, in one place.** `DESIGN.md` tokens become SCSS variables and CSS custom properties
-  in the `kitaab_theme` module:
+  in the `hisabkar_theme` module:
   - Odoo's `primary_variables` overrides for the backend;
   - a POS stylesheet for the till.
   - OWL templates never carry raw hex values, ad-hoc font sizes or one-off radii.
@@ -107,7 +107,7 @@ should look like a well-made instrument, not stock Odoo and not a SaaS template.
   - decorative blobs or wavy dividers;
   - emoji as design elements;
   - coloured left-border cards;
-  - generic copy ("Welcome to Kitaab", "all-in-one solution");
+  - generic copy ("Welcome to Hisabkar", "all-in-one solution");
   - same-height cookie-cutter sections;
   - `system-ui` as the primary typeface.
 - **What this product needs instead:**
@@ -151,7 +151,7 @@ Keep the Active section under about 40 entries, because it is loaded into every 
 | Path | Purpose |
 |---|---|
 | `docs/` | Specs, ADRs (`docs/adr/`). Source of truth for what and how. |
-| `addons/kitaab_*` | Kitaab's own Odoo modules (all Kitaab code lives here). |
+| `addons/hisabkar_*` | Hisabkar's own Odoo modules (all Hisabkar code lives here). |
 | `repos.json` | Upstream repos (Odoo, OCA) pinned to exact commits. |
 | `scripts/setup-dev.ps1` | Fetches upstream into `vendor/`, builds `.venv`, writes `odoo.conf`. |
 | `vendor/` | Upstream code, gitignored. Read it; never edit it. |
@@ -180,13 +180,13 @@ Then open `http://localhost:8069`.
 **Fresh database with a module installed:**
 
 ```powershell
-.venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf -d kitaab_dev -i <module> --stop-after-init
+.venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf -d hisabkar_dev -i <module> --stop-after-init
 ```
 
 **Test a module.** Use a throwaway database, because Odoo tests write to it:
 
 ```powershell
-.venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf -d kitaab_test -i <module> --test-enable --test-tags /<module> --stop-after-init
+.venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf -d hisabkar_test -i <module> --test-enable --test-tags /<module> --stop-after-init
 ```
 
 **Upgrade a module after changes:** run the same command as for a fresh database, with
@@ -195,7 +195,7 @@ Then open `http://localhost:8069`.
 **Upgrade upstream:**
 1. Edit the commit in `repos.json`.
 2. Rerun the setup script.
-3. Run every `kitaab_*` test.
+3. Run every `hisabkar_*` test.
 4. Commit `repos.json`.
 
 PDF reports (receipts, statements) need wkhtmltopdf: `winget install wkhtmltopdf.wkhtmltox`.

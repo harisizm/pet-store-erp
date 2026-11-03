@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Sets up a native-Windows Odoo 18 development environment for Kitaab (ADR-0003).
+  Sets up a native-Windows Odoo 18 development environment for Hisabkar (ADR-0003).
 
 .DESCRIPTION
   1. Fetches every repo in repos.json at its pinned commit into vendor/<name> (shallow, gitignored).
@@ -65,10 +65,10 @@ if (-not (Test-Path $conf)) {
             $paths += (Resolve-Path (Join-Path (Join-Path $vendor $repo.name) $p)).Path
         }
     }
-    # Kitaab's own modules live in addons/ and join the path once the first one exists.
+    # Hisabkar's own modules live in addons/ and join the path once the first one exists.
     $own = Join-Path $root 'addons'
     if (Test-Path $own) { $paths += $own }
-    $dbPassword = $env:KITAAB_DB_PASSWORD
+    $dbPassword = $env:HISABKAR_DB_PASSWORD
     if (-not $dbPassword) { $dbPassword = 'odoo' }
     $lines = @(
         '[options]',
@@ -80,10 +80,10 @@ if (-not (Test-Path $conf)) {
         "db_password = $dbPassword",
         'http_port = 8069',
         # ADR-0005: Odoo's daily usage report is pointed at a dead local port, so it cannot reach
-        # Odoo S.A. even before kitaab_privacy is installed.
+        # Odoo S.A. even before hisabkar_privacy is installed.
         'publisher_warranty_url = http://127.0.0.1:9/',
-        # Hosts kitaab_privacy's egress guard lets the server reach (comma-separated); empty = none.
-        'kitaab_egress_allowlist = '
+        # Hosts hisabkar_privacy's egress guard lets the server reach (comma-separated); empty = none.
+        'hisabkar_egress_allowlist = '
     )
     Set-Content -Path $conf -Value $lines -Encoding ascii
     Write-Host "wrote   odoo.conf"
@@ -94,7 +94,7 @@ if (-not (Test-Path $conf)) {
 if ($CreateDbRole) {
     $pg = Get-ChildItem 'C:\Program Files\PostgreSQL' -Directory | Sort-Object { [int]$_.Name } | Select-Object -Last 1
     if (-not $pg) { throw 'PostgreSQL not found under C:\Program Files\PostgreSQL. Install it with: winget install PostgreSQL.PostgreSQL.16' }
-    $dbPassword = $env:KITAAB_DB_PASSWORD
+    $dbPassword = $env:HISABKAR_DB_PASSWORD
     if (-not $dbPassword) { $dbPassword = 'odoo' }
     & (Join-Path $pg.FullName 'bin\psql.exe') -U postgres -h localhost -c "CREATE ROLE odoo LOGIN CREATEDB PASSWORD '$dbPassword';"
 }

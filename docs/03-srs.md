@@ -203,7 +203,7 @@ All reports: filters (date range, branch, category, brand, staff), drill-down to
 **FR-ORD-004 · P2** Delivery: own rider (name, phone, cash collected) or courier (Phase 3 API; P2 manual tracking number).
 **FR-ORD-005 · P2** COD reconciliation: expected vs received cash per rider/courier settlement.
 **FR-ORD-006 · P2** Channel stock sync: available qty (on hand − reserved − safety buffer) pushed to linked channels within 60 s of change.
-**FR-ORD-007 · P2** Product linking: map channel products/variants to Kitaab sellable units by SKU, barcode, or manual match UI.
+**FR-ORD-007 · P2** Product linking: map channel products/variants to Hisabkar sellable units by SKU, barcode, or manual match UI.
 
 ---
 ## 11. Pet Vertical Pack (PET) — Phase 2 (behind flag `pack.pet`)
@@ -266,7 +266,7 @@ All reports: filters (date range, branch, category, brand, staff), drill-down to
   any data to `*.odoo.com`. This covers telemetry, publisher-warranty, IAP, SMS, snail mail, partner
   autocomplete and media library. It holds in every deployment (SaaS and on-premise), and no setting
   can turn it off.
-  AC: the zero-egress test (ADR-0005) passes with all `kitaab_*` modules installed and every cron
+  AC: the zero-egress test (ADR-0005) passes with all `hisabkar_*` modules installed and every cron
   triggered; a 24 h network capture of an on-premise build shows no Odoo host.
 - **NFR-SEC-006** *(added 2026-11-03)* **Outbound allowlist.** The server connects only to loopback,
   its database, its SMTP relay, and hosts on the per-deployment allowlist. Each allowlisted
@@ -274,7 +274,7 @@ All reports: filters (date range, branch, category, brand, staff), drill-down to
   attempts are logged.
 - **NFR-SEC-007** *(added 2026-11-03)* **Browser containment.** Every web and POS response carries a
   Content-Security-Policy that limits scripts, styles, fonts, images and connections to the
-  Kitaab origin (plus `data:`/`blob:`). The client never loads from Odoo, Gravatar or third-party
+  Hisabkar origin (plus `data:`/`blob:`). The client never loads from Odoo, Gravatar or third-party
   CDNs.
 
 ### Usability & localization

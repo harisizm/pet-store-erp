@@ -1,6 +1,7 @@
 # ADR-0006: Hard fork of the core with a scripted, repeatable rebrand
 
-- **Status:** accepted (founder, 2026-11-03). Execution waits for the product name (`00` B5).
+- **Status:** accepted (founder, 2026-11-03). The target name is Hisabkar (`00` B5). The tool is
+  built in roadmap task P0-R.
 - **Date:** 2026-11-03
 - **Amends:** ADR-0003. The "upstream referenced, never edited" rule becomes "upstream is only ever
   changed by the rebrand tool".

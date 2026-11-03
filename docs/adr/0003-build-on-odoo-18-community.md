@@ -26,11 +26,11 @@ installer that runs as a service.
   - `pos_product_expiry` (block expired lots);
   - `account_financial_report` (aging);
   - plus their dependencies `report_xlsx` and `date_range`.
-- **Kitaab's own code:** Odoo modules in `addons/`, named `kitaab_*`. Odoo core and OCA code are
+- **Hisabkar's own code:** Odoo modules in `addons/`, named `hisabkar_*`. Odoo core and OCA code are
   never edited in place. An unavoidable patch is listed in `docs/upstream-patches.md` with its
   reason.
 - **On-premise:** the shop's Windows PC runs Odoo as a Windows service through Odoo's official
-  installer or our bundled equivalent, with `kitaab_*` modules added. Tills on the shop LAN use the
+  installer or our bundled equivalent, with `hisabkar_*` modules added. Tills on the shop LAN use the
   browser, so internet loss does not stop sales.
 - **SaaS:** a Linux cloud server at a hosting provider runs multi-worker Odoo with one database per
   shop, selected by `db_filter`. Nobody on the team or at the shops works on Linux directly; it is
@@ -41,11 +41,11 @@ installer that runs as a service.
 
 ## Consequences
 **Our own modules fill the gaps.** Sizes are in `13` §8.3.
-- `kitaab_l10n_ur`: Urdu, the largest item.
-- `kitaab_pos_fefo`: FEFO lot pre-selection at the till.
-- `kitaab_khata`: khata collection and statements.
-- `kitaab_fbr_pos`: FBR, Phase 3.
-- `kitaab_pet`: the pet pack.
+- `hisabkar_l10n_ur`: Urdu, the largest item.
+- `hisabkar_pos_fefo`: FEFO lot pre-selection at the till.
+- `hisabkar_khata`: khata collection and statements.
+- `hisabkar_fbr_pos`: FBR, Phase 3.
+- `hisabkar_pet`: the pet pack.
 
 **Architecture docs written for NestJS no longer apply.**
 - `04-architecture.md` §2–3 and `docs/AGENTS.md` §2 are superseded.
@@ -57,7 +57,7 @@ installer that runs as a service.
   - A database per tenant replaces RLS.
 
 **Upgrade.** `odoo/odoo` already defaults to 20.0. Plan one migration (18 → 20 or later) before 18
-leaves support. Keep `kitaab_*` modules free of core monkey-patches to make that cheap.
+leaves support. Keep `hisabkar_*` modules free of core monkey-patches to make that cheap.
 
 **Licences.**
 - **Odoo core (LGPL-3):** our modules may stay proprietary.

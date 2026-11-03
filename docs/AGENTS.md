@@ -52,10 +52,10 @@
    - Show and bucket them in the branch timezone (default `Asia/Karachi`).
    - Business-day boundaries in reports use the branch timezone, never the server timezone.
 9. **Module boundaries.**
-   - All Kitaab code lives in `addons/kitaab_*` modules, and every dependency is declared in
+   - All Hisabkar code lives in `addons/hisabkar_*` modules, and every dependency is declared in
      `__manifest__.py`.
    - Extend with `_inherit`, OWL `patch()` and view inheritance. Never edit `vendor/`.
-   - No monkey-patching outside the one sanctioned place: the egress guard in `kitaab_privacy`
+   - No monkey-patching outside the one sanctioned place: the egress guard in `hisabkar_privacy`
      (rule 15).
    - Raw SQL is allowed only in read-only reports, with a comment saying why the ORM was not used.
 10. **Contracts.** POS↔server calls use Odoo's data service and RPC. Every custom route or RPC
@@ -70,7 +70,7 @@
     - Never put them in XML/CSV data or in commits.
     - Document each one in `.env.example` / `docs/09`.
 13. **Licensing (ADR-0004).**
-    - Kitaab business modules are proprietary (`'license': 'Other proprietary'`). They may depend
+    - Hisabkar business modules are proprietary (`'license': 'Other proprietary'`). They may depend
       only on Odoo core (LGPL-3) and LGPL-compatible modules.
     - **A proprietary module must never list an AGPL module in `depends`**, and must never import
       from one.
@@ -90,7 +90,7 @@
 15. **Zero egress to Odoo S.A. (ADR-0005, NFR-SEC-005..007).**
     - Nothing may send data to `*.odoo.com` or to any third party unless the integration is
       explicitly allowlisted.
-    - `kitaab_privacy` must be installed on every database. It:
+    - `hisabkar_privacy` must be installed on every database. It:
       - removes the IAP family and the usage-report (publisher-warranty) call;
       - enforces the outbound allowlist;
       - sets the Content-Security-Policy.
@@ -103,13 +103,13 @@
 
 ## 2. Repository conventions (Odoo)
 - **Layout:**
-  - `addons/kitaab_<area>/` with the standard OCA layout: `__manifest__.py`, `models/`, `views/`,
+  - `addons/hisabkar_<area>/` with the standard OCA layout: `__manifest__.py`, `models/`, `views/`,
     `security/ir.model.access.csv`, `data/`, `static/src/`, `i18n/`, `tests/`, `migrations/`.
-  - One concern per module. `kitaab_pet` is the vertical pack and is switched on by installing it.
+  - One concern per module. `hisabkar_pet` is the vertical pack and is switched on by installing it.
 - **Manifest:**
   - `version` is `18.0.MAJOR.MINOR.PATCH`.
   - `license` follows §1.13.
-  - `author` is `"Kitaab"`.
+  - `author` is `"Hisabkar"`.
   - Explicit `depends`.
   - `installable: True`.
   - `auto_install` only for glue modules.
@@ -128,12 +128,12 @@
   - Migrations run forward only.
 - **Upstream:**
   - `repos.json` pins exact commits. Upgrade by editing it, rerunning `scripts/setup-dev.ps1`, and
-    running every `kitaab_*` test.
+    running every `hisabkar_*` test.
   - Unavoidable upstream patches are listed in `docs/upstream-patches.md`.
 - **Commits:** Conventional Commits with requirement IDs, for example
-  `feat(kitaab_pos_fefo): pre-select earliest-expiry lot [FR-INV-011]`.
+  `feat(hisabkar_pos_fefo): pre-select earliest-expiry lot [FR-INV-011]`.
 - **Feature flags:**
-  - A pack is a module: installing `kitaab_pet` turns the pack on.
+  - A pack is a module: installing `hisabkar_pet` turns the pack on.
   - Finer switches are `res.config.settings` booleans backed by `ir.config_parameter`.
 - **Commands:** `../AGENTS.md` §6.
 
@@ -154,7 +154,7 @@
 - [ ] Audit: business fields `tracking=True` on `mail.thread` models; create/update/void captured
       by the audit-log glue (FR-ADM-009).
 - [ ] Licensing (§1.13): no proprietary module depends on or imports an AGPL module. `license` set.
-- [ ] Zero egress (§1.15): `kitaab_privacy`'s egress test still passes with the new module
+- [ ] Zero egress (§1.15): `hisabkar_privacy`'s egress test still passes with the new module
       installed.
 - [ ] `06-api-spec.md` updated for any new route or RPC method.
 - [ ] Nothing under `vendor/` changed. No TODOs without a linked issue.

@@ -15,7 +15,7 @@ Independent retail shops in Pakistan, starting with the ~17–24 pet shops in Ba
 ## 2. Solution
 A simple, Urdu/English, offline-first ERP that a cashier can learn in one hour:
 
-| Problem | Kitaab capability |
+| Problem | Hisabkar capability |
 |---|---|
 | Hand-written register | Fast POS with barcode or search, receipts, day close (Z-report) |
 | Unknown stock | Real-time stock ledger, low-stock alerts, purchase suggestions |
@@ -55,7 +55,7 @@ grooming/boarding appointments.
 
 ## 7. Success metrics
 **Pilot (first 3 shops, 60 days)**
-- Register retired: ≥ 90% of sales entered in Kitaab by day 30.
+- Register retired: ≥ 90% of sales entered in Hisabkar by day 30.
 - Daily active use: POS used on ≥ 26 of 30 days.
 - Stock accuracy: physical count vs system within 5% of SKUs by day 45.
 - Owner opens daily report ≥ 4 days/week.

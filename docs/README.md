@@ -1,8 +1,9 @@
-# Kitaab ERP — Documentation Index
+# Hisabkar ERP — Documentation Index
 
-> Working name: **Kitaab ERP** ("kitaab" = book/ledger). Rename freely; search-replace `Kitaab`.
+> **Hisabkar** (حسابکار, "the one who keeps the accounts"): *Your one place to manage your entire
+> business.* Chosen by the founder on 2026-11-03 (`00` B5). It replaces the working name "Kitaab".
 
-Kitaab is a multi-tenant, offline-capable retail ERP for small and mid-size shops in Pakistan.
+Hisabkar is a multi-tenant, offline-capable retail ERP for small and mid-size shops in Pakistan.
 It has a **generic retail core** (catalog, inventory, POS, purchasing, customers/khata, suppliers,
 expenses, accounting, reports) plus **vertical packs** that add industry features.
 The first vertical pack is **Pet Retail** (pet shops, groomers, small vet pharmacies).

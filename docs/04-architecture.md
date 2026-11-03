@@ -1,6 +1,6 @@
 # Architecture
 
-> **PARTLY SUPERSEDED (2026-11-03).** Kitaab is built on Odoo 18 Community (ADR-0003).
+> **PARTLY SUPERSEDED (2026-11-03).** Hisabkar is built on Odoo 18 Community (ADR-0003).
 > - §2–3 (the NestJS stack and monorepo layout) no longer apply.
 > - §4–6 remain the reference for module boundaries, tenancy intent and offline-sync behaviour, but
 >   they are realised through Odoo mechanisms. The mapping is in `05-data-model.md` and `06-api-spec.md`.
@@ -62,7 +62,7 @@ Rejected: microservices (too much overhead for team size), Firebase (relational 
 
 ## 3. Repository layout
 ```
-kitaab/
+hisabkar/
 ├── apps/
 │   ├── api/            # NestJS: modules, workers, webhook receivers
 │   ├── web/            # Next.js: admin + public e-receipts

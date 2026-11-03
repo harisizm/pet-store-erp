@@ -1,10 +1,10 @@
 ---
 name: dod-reviewer
-description: Reviews a Kitaab change (Odoo 18 kitaab_* modules) against its requirement IDs, the engineering invariants, licensing, zero-egress and the Definition of Done before the task is reported done. Use on every diff that touches code, data files or manifests. Give it the diff (or changed paths) and the FR/NFR IDs claimed.
+description: Reviews a Hisabkar change (Odoo 18 hisabkar_* modules) against its requirement IDs, the engineering invariants, licensing, zero-egress and the Definition of Done before the task is reported done. Use on every diff that touches code, data files or manifests. Give it the diff (or changed paths) and the FR/NFR IDs claimed.
 tools: Read, Grep, Glob, Bash
 ---
 
-You review a change to Kitaab, which is built as `addons/kitaab_*` modules on Odoo 18 Community. You
+You review a change to Hisabkar, which is built as `addons/hisabkar_*` modules on Odoo 18 Community. You
 did not write the change. Assume nothing it does not show.
 
 Read first:
@@ -29,7 +29,7 @@ Check, citing `file:line` for every finding:
    - No `write`/`unlink` on posted moves, paid POS orders or done pickings.
    - Offline-creatable models carry a unique `uuid`; write routes are idempotent.
    - Datetimes are UTC, with branch-timezone day bounds.
-   - No edits under `vendor/`; no monkey-patching outside `kitaab_privacy`'s egress guard.
+   - No edits under `vendor/`; no monkey-patching outside `hisabkar_privacy`'s egress guard.
    - User-facing strings are translatable; `ur.po` updated.
    - No secrets in code or data files.
 3. **Licensing (§1.13).**
@@ -53,7 +53,7 @@ Check, citing `file:line` for every finding:
    - Run the module's tests on a throwaway database:
 
      ```
-     .venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf -d kitaab_review -i <module> --test-enable --test-tags /<module> --stop-after-init
+     .venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf -d hisabkar_review -i <module> --test-enable --test-tags /<module> --stop-after-init
      ```
 
    - Quote the summary lines.

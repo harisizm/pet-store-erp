@@ -9,7 +9,7 @@ Status legend: **DECIDED** (build on it) · **ASSUMED** (build on it, may change
 | B2 | Product is SaaS, billed monthly per branch. Hypothesis: PKR 2,000–3,500/branch/month, first month free, optional paid onboarding. | ASSUMED |
 | B3 | Many target shops already have WooCommerce/Shopify websites; stock sync with those sites is a key differentiator. | ASSUMED (from research; verify per shop) |
 | B4 | Founder sells and onboards in person; no self-serve signup in Phase 1. | ASSUMED |
-| B5 | Product name. "Kitaab" is a working name to be replaced: one short word, easy to pronounce, premium, a khata alternative, plus a tagline "Your one place to manage …". The founder rejected the shortlists of 2026-11-03 (Roznamcha/Munshi/Tijori/Daftar; Rokar/Zarr/Bayaz/Naqd; Munshi/Barkat/Sona/Zar) and will propose names. Excluded as taken or conflicting: Hisaab (Hisaab.pk), the khata-family names (DigiKhata, Udhaar, mKhata, Easy Khata), Bahi (Indian "bahi khata"), Saakh (Indian credit app), Nafa (NBP Funds' former "NAFA"), Seth (negative connotation). | OPEN (founder supplying ideas) |
+| B5 | Product name **Hisabkar** (حسابکار, "the one who keeps the accounts"). Tagline: **"Your one place to manage your entire business."** It replaces the working name "Kitaab". Checked 2026-11-03: no existing product named Hisabkar was found. hisabkar.pk, .app, .co and .io show no DNS record (confirm at a registrar); hisabkar.com is registered. Same word family as the Pakistani competitors Hisaab.pk and HysabOne, so the visual identity must set it apart. Next steps: register a domain, and do a trademark search with IPO-Pakistan (`00` L4). | DECIDED 2026-11-03 (founder) |
 | B7 | No trace of "Odoo" anywhere: hard fork with a scripted rebrand (ADR-0006). Only the legally required licence and copyright notices remain, in source and the legal-notices document. | DECIDED 2026-11-03 (founder) |
 | B6 | Two deployment modes from one codebase: (a) **on-premise**, installed on a shop's own Windows PC and working without internet; (b) **cloud SaaS** in the browser for many shops. Founder, 2026-11-03. Refines B2. | DECIDED |
 
@@ -28,7 +28,7 @@ Status legend: **DECIDED** (build on it) · **ASSUMED** (build on it, may change
 ## Technical
 | # | Item | Status |
 |---|------|--------|
-| T1 | ~~Stack: TypeScript monorepo; NestJS API; PostgreSQL 16; Redis + BullMQ; Next.js admin web; React + Vite PWA for POS.~~ Superseded: Odoo 18 Community (Python, PostgreSQL, OWL) plus OCA modules and our `kitaab_*` modules. | SUPERSEDED by ADR-0003 |
+| T1 | ~~Stack: TypeScript monorepo; NestJS API; PostgreSQL 16; Redis + BullMQ; Next.js admin web; React + Vite PWA for POS.~~ Superseded: Odoo 18 Community (Python, PostgreSQL, OWL) plus OCA modules and our `hisabkar_*` modules. | SUPERSEDED by ADR-0003 |
 | T2 | POS must work offline for at least 72 hours (load-shedding, unstable internet). | DECIDED |
 | T3 | Hosting region | OPEN (candidates: Singapore, Bahrain, Frankfurt; measure latency from Lahore) |
 | T4 | Login: phone number + OTP for owners/managers; 4–6 digit PIN for cashiers on a registered device. | ASSUMED |
@@ -43,6 +43,7 @@ Status legend: **DECIDED** (build on it) · **ASSUMED** (build on it, may change
 | L1 | Odoo trademark terms: Odoo's trademark page returned 404 on 2026-11-03, so the exact terms are unread. We comply by never showing the Odoo name or logo (`AGENTS.md` §1.14). A lawyer confirms before launch. | OPEN |
 | L2 | Licence review of ADR-0004 (proprietary modules + AGPL glue), the EULA, and LGPL/AGPL source-offer duties for on-premise installs. Due before the first paid customer. | OPEN |
 | L3 | Data privacy: zero egress to Odoo S.A. (ADR-0005, NFR-SEC-005). | DECIDED |
+| L4 | "Hisabkar" trademark: search and register with the Intellectual Property Organisation of Pakistan (classes 9 and 42) before public launch; register a domain (hisabkar.pk / .app / .co / .io appear free). | OPEN (founder) |
 
 ## Conflicts found
 _(Agents append here.)_

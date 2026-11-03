@@ -18,8 +18,8 @@ WhatsApp, Shopify, WooCommerce and FBR.
 ## Decision
 - **Base:** ERPNext v16 on the Frappe framework.
 - **POS:** POS Awesome V15 (`defendicon/POS-Awesome-V15`).
-- **Kitaab features:**
-  - live in our own Frappe apps (`kitaab_core`, `kitaab_pet`);
+- **Hisabkar features:**
+  - live in our own Frappe apps (`hisabkar_core`, `hisabkar_pet`);
   - ERPNext and POS Awesome are not patched in place;
   - unavoidable patches are listed in `../upstream-patches.md`.
 - **Tenancy:** one Frappe site per tenant.

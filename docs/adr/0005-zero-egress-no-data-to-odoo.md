@@ -31,7 +31,7 @@ Everything else that matched `odoo.com` in the audit (about 230 hits) is a help 
 hyperlink. A link sends nothing unless someone clicks it, and we remove the user-facing ones anyway
 (debranding).
 
-None of the modules Kitaab needs hard-depends on the IAP family. That was checked by computing the
+None of the modules Hisabkar needs hard-depends on the IAP family. That was checked by computing the
 dependency closure of `point_of_sale`, `stock`, `account`, `sale`, `purchase`, `product_expiry`,
 `mail`, `contacts`, `l10n_pk` and `phone_validation`. So the whole family can be removed.
 
@@ -39,24 +39,24 @@ dependency closure of `point_of_sale`, `stock`, `account`, `sale`, `purchase`, `
 The default is **zero egress**. Data leaves only through integrations the shop has explicitly
 enabled, each one on an allowlist. Five layers enforce it, so that no single mistake leaks.
 
-1. **Module layer (`kitaab_privacy`).**
+1. **Module layer (`hisabkar_privacy`).**
    - At install and on every upgrade, uninstall `iap`, `iap_mail`, `sms`, `snailmail`,
      `snailmail_account`, `partner_autocomplete`, `web_unsplash`, `pos_sms`, `stock_sms`,
      `sale_sms`, and any module whose name matches `*_iap*`.
    - Refuse any later install of them (override in `ir.module.module`).
-2. **Code layer (`kitaab_privacy`).**
+2. **Code layer (`hisabkar_privacy`).**
    - Neutralise `publisher_warranty.contract` (no-op methods, cron deactivated).
    - Disable Gravatar lookups and link previews.
    - Install a server-wide **egress guard** (`post_load` hook), the only sanctioned monkey-patch.
      - It wraps outbound connections at the socket level.
      - Allowed: loopback, the configured DB host, the configured SMTP host, and hosts listed in
-       `kitaab_egress_allowlist` in `odoo.conf`.
+       `hisabkar_egress_allowlist` in `odoo.conf`.
      - `*.odoo.com` is **always** denied, even if allowlisted.
      - Every blocked attempt is logged with its caller and raises a clear error.
 3. **Config layer.** `scripts/setup-dev.ps1` and the production and on-premise configs set
    `publisher_warranty_url` to an unroutable local address. SaaS also sets `list_db = False`.
 4. **Browser layer.**
-   - `kitaab_privacy` sends a Content-Security-Policy header on every response: `default-src 'self'`,
+   - `hisabkar_privacy` sends a Content-Security-Policy header on every response: `default-src 'self'`,
      with `img-src` and `connect-src` limited to `'self'`, `data:` and `blob:`.
    - The web client and POS therefore cannot fetch from Odoo, Gravatar, Unsplash, YouTube or CDNs.
    - Fonts and assets are self-hosted.
@@ -69,7 +69,7 @@ enabled, each one on an allowlist. Five layers enforce it, so that no single mis
      except the allowlist.
 
 **Proof:**
-- An automated test (`kitaab_privacy/tests/test_zero_egress.py`) installs every `kitaab_*` module,
+- An automated test (`hisabkar_privacy/tests/test_zero_egress.py`) installs every `hisabkar_*` module,
   triggers every `ir.cron` job and the known flows above, and asserts the guard saw zero
   non-allowlisted connection attempts. It runs in CI and is part of the DoD (`docs/AGENTS.md` §3).
 - Release check: run the on-premise build for 24 h under network capture (Windows Resource Monitor
