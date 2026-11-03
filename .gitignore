@@ -1,0 +1,18 @@
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+coverage/
+*.log
+
+# Secrets: only the documented template is committed.
+.env
+.env.*
+!.env.example
+
+# Local Claude Code state; shared config (.claude/agents, skills, design-fix.md) is committed.
+.claude/settings.local.json
+
+.DS_Store
+Thumbs.db
