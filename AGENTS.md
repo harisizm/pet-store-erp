@@ -42,7 +42,8 @@ The specs are in `docs/`. Hisabkar's own code is Odoo modules in `addons/` (none
   - `04-architecture.md` §2–3 (the NestJS stack) is superseded.
   - Docs 05–12 were written for Odoo.
   - The invariants in `docs/AGENTS.md` §1 are mapped onto Odoo mechanisms.
-- **Next task:** `docs/11-roadmap-and-agent-tasks.md`, Phase 0, task P0-1.
+- **Where we are and what to do next:** `docs/STATUS.md`. Read it first, and update it at the end
+  of every session.
 
 ## 1. Read before you touch anything
 1. `LESSONS.md`: what earlier agents learned the hard way. Apply it.

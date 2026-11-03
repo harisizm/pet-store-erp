@@ -40,8 +40,10 @@
   - **Status 2026-11-03:**
     - Tests: 24/24 pass on a fresh install plus upgrade.
     - `dod-reviewer` found 2 blockers and 9 gaps; all are fixed or recorded in ADR-0005.
-    - The one-hour soak on `hisabkar_dev` started at 11:07 UTC (`.odoo-data/p0-2-soak.log`).
-    - Tick this task once the soak log shows zero blocked or attempted outbound connections.
+    - Soak: 5 min 18 s on `hisabkar_dev` (11:07:37–11:12:55 UTC). 0 blocked, 0 CSP violations,
+      0 errors.
+    - Stopped early at the end of session 1. Resume by running the full hour (`docs/STATUS.md`
+      §2), then tick.
 - [ ] **P0-3 Tooling and CI.** Add:
   - a `pre-commit` config (ruff, pylint-odoo, eslint, prettier);
   - `scripts/check-licences.py`;
