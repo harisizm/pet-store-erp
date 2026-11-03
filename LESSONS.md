@@ -22,9 +22,14 @@ Numbers are never reused. Superseded lessons stay in the Archive with a pointer 
 message limit. `docs/04-architecture.md` stops mid-§6.7 and docs 05–12 never arrived.
 **Lesson:** A missing spec is a question for the founder, not a gap to fill by inference. Invented
 data models or API shapes become "the spec" the moment code is built on them.
-**Do:** Treat 05–12 and the rest of 04 as unavailable until the founder supplies them. Ask for them
-in multiple parts or as files. Remove this lesson once they are in place.
-**Evidence:** `docs/04-architecture.md` truncation marker; stub banners in `docs/05`–`12`.
+**Do:**
+- The founder has no copies of the originals.
+- Docs 05–12 were re-authored for Odoo 18 on 2026-11-03 from the SRS and are marked as such.
+- Where they conflict with `03-srs.md`, the SRS wins. Log the gap in `00`; do not quietly follow
+  05–12.
+- `04` §6.7 onward remains lost.
+
+**Evidence:** `docs/04-architecture.md` truncation marker; "Re-authored" banners in `docs/05`–`12`.
 
 ### L-002 · 2026-11-03 · tooling · confidence: high
 **Trigger:** Development is on Windows with Git Bash. The `design-fix` skill documents that
@@ -42,9 +47,49 @@ across parallel agents.
 **Lesson:** GitHub facts (stars, licence, push date) must be measured. That budget runs out fast
 when several agents query at once.
 **Do:** Read each repo once (`curl -s https://api.github.com/repos/OWNER/REPO`) and reuse the
-result. Ask the founder to run `gh auth login` before any large GitHub sweep. Pushing works
-regardless, through Git Credential Manager.
+result. Re-authenticated 2026-11-03 (`gh auth login -w`, device code approved by the founder). Once
+`gh auth status` is green, prefer `gh api repos/OWNER/REPO`: authenticated calls allow 5,000/hour.
+If the token goes invalid again, rerun that flow. Pushing works regardless, through Git Credential
+Manager.
 **Evidence:** `gh auth status` output; `docs/13-open-source-base-evaluation.md` §2.
+
+### L-004 · 2026-11-03 · process · confidence: high
+**Trigger:** The base platform was decided three times in one day.
+- ERPNext was picked on features, then ruled out: the founder required a Windows-native dev
+  environment and on-premise Windows installs.
+- Licensing and "no data to the vendor" surfaced only after Odoo was picked.
+
+**Lesson:** For a platform-level choice, the founder's non-functional constraints decide the
+outcome before feature fit does. Those constraints: OS and hosting, deployment model, licence
+freedom, data privacy, budget.
+
+**Do:** Before evaluating any platform, library or service, ask in one multiple-choice round:
+- where does it run (dev, prod, customer site);
+- may we modify and resell it;
+- may it send data anywhere;
+- what may it cost.
+
+Then research.
+
+**Evidence:** ADR-0002 (superseded), ADR-0003, ADR-0004, ADR-0005; `docs/00` B6, T8, L1–L3.
+
+### L-005 · 2026-11-03 · tooling · confidence: high
+**Trigger:** The Odoo 18 egress audit found that `iap`, `sms`, `snailmail`, `partner_autocomplete`,
+`web_unsplash` and `pos_sms`/`stock_sms`/`sale_sms` are all `auto_install`. They land on every
+database alongside POS, stock and sales, even though nothing we need depends on them.
+
+**Lesson:** In Odoo, what you install is not what you get. `auto_install` modules arrive silently
+whenever their dependencies are present. A new upstream version or a new dependency can add
+outbound calls without anyone choosing them.
+
+**Do:** When adding a module dependency or upgrading upstream:
+- compute the auto-install closure (the script pattern in ADR-0005's audit);
+- re-run the egress grep over `vendor/`;
+- keep `test_zero_egress` green.
+
+Never assume "we didn't install X".
+
+**Evidence:** ADR-0005 audit table; `__manifest__.py` `auto_install` flags in `vendor/odoo/addons`.
 
 ---
 

@@ -18,6 +18,13 @@
 ## Known intentional exceptions
 None yet. Add each one with the `DESIGN.md` section that allows it.
 
+## App under test
+- Odoo 18 at `http://localhost:8069`: back office at `/odoo`, POS at `/pos/ui`. The founder starts
+  it with `.venv\Scripts\python vendor\odoo\odoo-bin -c odoo.conf`. Never start it yourself.
+- Styling lives in `addons/kitaab_theme`. Upstream templates are in `vendor/` and are never edited.
+  Fixes go in `kitaab_*` overrides.
+- Any user-visible "Odoo" text, logo or favicon is a FIX (ADR-0004).
+- So is any request to an external host (ADR-0005).
+
 ## Verification
-Not scaffolded yet. Once the apps exist, list the typecheck, lint and test commands here and run them
-after every approved fix.
+After every approved fix, run the touched module's tests (`AGENTS.md` §6), then re-audit.
