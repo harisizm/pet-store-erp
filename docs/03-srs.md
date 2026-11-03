@@ -262,6 +262,20 @@ All reports: filters (date range, branch, category, brand, staff), drill-down to
 - **NFR-SEC-002** RLS tenant isolation; automated tests.
 - **NFR-SEC-003** OWASP ASVS Level 1 for P1, Level 2 targets for P2.
 - **NFR-SEC-004** Device-bound refresh tokens for POS; remote device revoke.
+- **NFR-SEC-005** *(added 2026-11-03, founder)* **Zero egress to Odoo S.A.** No component may send
+  any data to `*.odoo.com`. This covers telemetry, publisher-warranty, IAP, SMS, snail mail, partner
+  autocomplete and media library. It holds in every deployment (SaaS and on-premise), and no setting
+  can turn it off.
+  AC: the zero-egress test (ADR-0005) passes with all `kitaab_*` modules installed and every cron
+  triggered; a 24 h network capture of an on-premise build shows no Odoo host.
+- **NFR-SEC-006** *(added 2026-11-03)* **Outbound allowlist.** The server connects only to loopback,
+  its database, its SMTP relay, and hosts on the per-deployment allowlist. Each allowlisted
+  integration is documented in `09-security-and-compliance.md` with the data it sends. Blocked
+  attempts are logged.
+- **NFR-SEC-007** *(added 2026-11-03)* **Browser containment.** Every web and POS response carries a
+  Content-Security-Policy that limits scripts, styles, fonts, images and connections to the
+  Kitaab origin (plus `data:`/`blob:`). The client never loads from Odoo, Gravatar or third-party
+  CDNs.
 
 ### Usability & localization
 - **NFR-USE-001** A new cashier completes a 5-item sale with cash change unaided after ≤ 15 min training.

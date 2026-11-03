@@ -1,5 +1,10 @@
 # Architecture
 
+> **PARTLY SUPERSEDED (2026-11-03).** Kitaab is built on Odoo 18 Community (ADR-0003).
+> - §2–3 (the NestJS stack and monorepo layout) no longer apply.
+> - §4–6 remain the reference for module boundaries, tenancy intent and offline-sync behaviour, but
+>   they are realised through Odoo mechanisms. The mapping is in `05-data-model.md` and `06-api-spec.md`.
+>
 > **INCOMPLETE — truncated in transit (2026-11-03).** The source paste was cut at the 50,000-character
 > message limit partway through §6.7. Everything below up to the marker is verbatim. The rest of §6.7
 > and any later sections were not received. Do not reconstruct them from memory; ask the founder for

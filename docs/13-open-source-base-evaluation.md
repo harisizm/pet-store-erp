@@ -1,7 +1,10 @@
 # Open-Source Base Evaluation
 
-- **Status:** the founder chose the recommendation, ERPNext v16 + POS Awesome V15, on 2026-11-03.
-  Recorded as `adr/0002`; conditional on the §5 spike.
+- **Status:**
+  - Round 1 (§1–7) chose ERPNext. That choice was superseded the same day: the founder then required
+    a Windows-native base and both on-premise and SaaS deployment (`00` T8, B6).
+  - **Round 2 is §8** and is the current evaluation. The founder chose Odoo 18 Community with a
+    Linux cloud SaaS host on 2026-11-03 (ADR-0003).
 - **Date:** 2026-11-03.
 - **Method:** three parallel research passes: full ERP suites, standalone POS/inventory, and
   vertical/regional add-ons.
@@ -166,3 +169,99 @@ offline design is already specified.
 - Any Pakistani pet shop running any of these.
 - Pakistan support exists: [Havenir](https://frappe.io/partners/pakistan/havenir-solutions-private-limited)
   (Lahore) is a listed Frappe partner.
+
+---
+
+## 8. Round 2: Windows-native bases (2026-11-03)
+
+### 8.1 New constraints
+These come from `00` B6 and T8.
+- **Windows-native.** The base runs natively on Windows (no WSL, Docker or Linux) for developers
+  and for shop installs.
+- **Two deployment modes.** It ships as an on-premise install on a shop's Windows PC (offline) and
+  as cloud SaaS.
+- **Must-haves.** Urdu, free WhatsApp, free FBR integration, and FEFO batch selection at the POS
+  bill.
+
+Two consequences follow:
+- **ERPNext is out:** it runs only on Linux.
+- **On-premise solves offline.** With the server on the shop's own PC, losing the internet does not
+  stop the till. The 72 h offline requirement only bites for SaaS shops.
+
+### 8.2 The honest result
+**No Windows-native open-source base has all four must-haves out of the box.** Each finalist needs
+a defined amount of our own code on top.
+
+| Must-have | Odoo 18 Community | Dolibarr 23 |
+|---|---|---|
+| Runs natively on Windows | **Y (with limits)**. The official installer bundles Python, PostgreSQL 16 and wkhtmltopdf and registers a Windows service. It runs as a single process with no workers and no memory cap; Odoo's docs call Windows fine for single-user/testing and discourage it for production. Fine for one shop's tills. | **Y**. The DoliWamp installer lags core by a major version (22.0.4 vs 23.0.4), so we would ship our own bundled installer. |
+| Urdu | **N**. No `ur` language in core and no `ur.po` in any addon (17/18/19). RTL works in the POS through the RTL asset path, proven by Arabic users. We add the language and translate POS, stock, account and sale ourselves. | **Partial**. `ur_PK` 74.5% of 16,580 keys; TakePOS 68%; RTL set. Quality unchecked. |
+| Free WhatsApp | **Y**: [OCA/social `mail_gateway_whatsapp`](https://github.com/OCA/social/tree/18.0/mail_gateway_whatsapp) 18.0, AGPL-3, updated 2026-10-26, Meta Cloud API. Meta still bills per template message. Plus `wa.me` links. | **N**. Only `wa.me` links, which we build. |
+| Free FBR (POS fiscalisation) | **N free**. Free modules cover invoices only. POS fiscalisation exists as [`ol_pos_fbr_connector`](https://apps.odoo.com/apps/modules/18.0/ol_pos_fbr_connector), $78, LGPL-3, so we can buy once and fork. Or we write it. | **N**. We build it. |
+| FEFO at the POS bill | **N in core**. The POS lists lots unsorted and auto-picks only when there is a single lot. OCA [`pos_product_expiry`](https://github.com/OCA/pos/tree/18.0/pos_product_expiry) blocks expired lots. FEFO suggestion is about 100 lines of our own code. | **Partial**. TakePOS already lists lots expiry-ascending; it needs auto-pick plus the expiry shown on screen (one patch). |
+| Khata | **Partial**. POS credit sale and credit limit are in Community. Settling dues in the POS and the aged receivables report are Enterprise-only; OCA `account_financial_report` (free) covers aging. | **Partial**. Unpaid-bill limit and late-payment list; no aging buckets. |
+| Loose / decimal UoM | Y | Y |
+| Offline POS for SaaS shops | **Y**. Browser IndexedDB order queue. | **N**. Server-rendered POS. |
+| Multi-shop SaaS | **Y**. Many databases with a db-filter per host. Must be hosted on a multi-process server (see §8.4). | **Partial**. SellYourSaas is Ubuntu-only; the `multicompany` module's price and licence are unverified. |
+| Ecosystem | 55.5k★, LGPL-3 core (our modules can stay closed); OCA has hundreds of free modules | 7.8k★, GPL-3 |
+
+**Others checked and rejected for Round 2:**
+- **NexoPOS:** no Urdu, no lots.
+- **OSPOS:** about 3% Urdu, no lots.
+- **iDempiere:** FEFO in the engine and real multi-tenancy, but no maintained POS and no Urdu.
+- **uniCenta and Chromis:** stale Java desktop apps.
+- **Frappe Books:** archived.
+- **Ever Gauzy:** a TypeScript project, but no retail features.
+- **open-mercato:** needs WSL or Docker.
+- **Store-POS:** no licence.
+
+**There is no credible TypeScript base.**
+
+### 8.3 Recommendation: Odoo 18 Community
+Odoo is the only Windows-native base that already does the two things hardest to build ourselves:
+- a POS that queues sales offline in the browser (needed for SaaS shops);
+- multi-database SaaS.
+
+It also has free WhatsApp, a free aging report, and a one-click Windows installer that runs as a
+service, which is exactly the on-premise shop install.
+
+Version 18 over 19 or 20: the OCA modules we need (`mail_gateway_whatsapp`, `pos_product_expiry`)
+exist for 18.0. `mail_gateway_whatsapp` has no 19.0 branch.
+
+**What we build, as our own Odoo modules (core stays unpatched):**
+
+| Module | Covers | Size |
+|---|---|---|
+| `kitaab_l10n_ur` | `ur_PK` language (RTL); Urdu translations of POS, stock, account and sale | Large (translation), one-off; worth contributing upstream |
+| `kitaab_pos_fefo` | Pre-select the earliest-expiry lot with stock, show the expiry on the line, Manager PIN for expired lots (FR-INV-011/012) | Small (about 100–300 lines) |
+| `kitaab_khata` | Collect khata in the POS, statements, `wa.me` reminders (FR-CUS-002..006) | Medium |
+| `kitaab_fbr_pos` | FBR POS fiscalisation, by forking `ol_pos_fbr_connector` (LGPL) or writing our own. Phase 3, optional (`00` P8). | Medium |
+| `kitaab_pet` | Pets, live animals, grooming and boarding, restock reminders | Large (no base has it) |
+
+### 8.4 Risks to accept
+1. **Windows production limits.** One process, no workers, no memory cap. Right for one shop's
+   tills; wrong for hosting many shops.
+   - The SaaS server should run on Linux at a hosting provider. Nobody on the team or at the shops
+     ever touches it; it is a cloud box like any website host.
+   - If even that is unacceptable, SaaS on Windows Server means one Odoo service per handful of
+     tenants behind IIS. It works, but scales worse.
+2. **Urdu is entirely our own work** for the four big modules.
+3. **Upgrade cadence.**
+   - `odoo/odoo` already defaults to 20.0.
+   - If Odoo keeps supporting only the three latest versions, 18 falls out of support around late
+     2027 (inferred, not checked).
+   - Plan one migration.
+4. **Licences.**
+   - OCA modules are AGPL-3. Shipping them to shops' PCs (on-premise) is distribution, so we offer
+     their source.
+   - Our own modules built on the LGPL core may stay closed.
+5. **FBR** is a $78 purchase or a build. It is not free anywhere for POS.
+
+### 8.5 Not verified
+- Real Odoo-on-Windows small-shop deployments.
+- Odoo's Weblate Urdu status (the page returned 403).
+- Whether the free FBR listings download without a login.
+- Paid vendors' FBR claims.
+- Meta's current WhatsApp pricing.
+- The price and licence of Dolibarr's `multicompany` module.
+- TakePOS Urdu translation quality.

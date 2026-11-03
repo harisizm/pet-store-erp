@@ -10,6 +10,7 @@ Status legend: **DECIDED** (build on it) · **ASSUMED** (build on it, may change
 | B3 | Many target shops already have WooCommerce/Shopify websites; stock sync with those sites is a key differentiator. | ASSUMED (from research; verify per shop) |
 | B4 | Founder sells and onboards in person; no self-serve signup in Phase 1. | ASSUMED |
 | B5 | Product name | OPEN |
+| B6 | Two deployment modes from one codebase: (a) **on-premise**, installed on a shop's own Windows PC and working without internet; (b) **cloud SaaS** in the browser for many shops. Founder, 2026-11-03. Refines B2. | DECIDED |
 
 ## Product
 | # | Item | Status |
@@ -26,17 +27,28 @@ Status legend: **DECIDED** (build on it) · **ASSUMED** (build on it, may change
 ## Technical
 | # | Item | Status |
 |---|------|--------|
-| T1 | Stack: TypeScript monorepo; NestJS API; PostgreSQL 16; Redis + BullMQ; Next.js admin web; React + Vite PWA for POS. | DECIDED (see ADR-0001 in 04-architecture) |
+| T1 | ~~Stack: TypeScript monorepo; NestJS API; PostgreSQL 16; Redis + BullMQ; Next.js admin web; React + Vite PWA for POS.~~ Superseded: Odoo 18 Community (Python, PostgreSQL, OWL) plus OCA modules and our `kitaab_*` modules. | SUPERSEDED by ADR-0003 |
 | T2 | POS must work offline for at least 72 hours (load-shedding, unstable internet). | DECIDED |
 | T3 | Hosting region | OPEN (candidates: Singapore, Bahrain, Frankfurt; measure latency from Lahore) |
 | T4 | Login: phone number + OTP for owners/managers; 4–6 digit PIN for cashiers on a registered device. | ASSUMED |
 | T5 | SMS OTP provider | OPEN (local aggregator vs. Twilio; cost) |
 | T6 | WhatsApp: Phase 1 uses `wa.me` share links (free, manual send). Phase 2 uses Meta WhatsApp Cloud API (paid, templates). | DECIDED |
 | T7 | Receipt printing: browser print to 80 mm thermal printer in Phase 1; ESC/POS local bridge later if needed. | ASSUMED |
+| T8 | The open-source base must run **natively on Windows**, with no WSL, Docker or Linux, for both development and on-premise installs. It must provide Urdu, free WhatsApp, free FBR integration, and FEFO batch selection at the POS bill. Founder, 2026-11-03. This rules out ERPNext (ADR-0002 superseded). | DECIDED → base is Odoo 18 Community (ADR-0003). SaaS server on a Linux cloud host; devs and shops on Windows. |
+
+## Legal
+| # | Item | Status |
+|---|------|--------|
+| L1 | Odoo trademark terms: Odoo's trademark page returned 404 on 2026-11-03, so the exact terms are unread. We comply by never showing the Odoo name or logo (`AGENTS.md` §1.14). A lawyer confirms before launch. | OPEN |
+| L2 | Licence review of ADR-0004 (proprietary modules + AGPL glue), the EULA, and LGPL/AGPL source-offer duties for on-premise installs. Due before the first paid customer. | OPEN |
+| L3 | Data privacy: zero egress to Odoo S.A. (ADR-0005, NFR-SEC-005). | DECIDED |
 
 ## Conflicts found
 _(Agents append here.)_
 
 | # | Conflict | Status |
 |---|---|---|
-| C1 | 2026-11-03: the founder decided to build on an existing open-source ERP/POS instead of from scratch. This supersedes T1 / ADR-0001 (the NestJS + Drizzle + React stack) and `AGENTS.md` §2 tooling, pending the choice of base. The SRS requirements and the `AGENTS.md` §1 domain invariants still apply. Evaluation: `13-open-source-base-evaluation.md`. | DECIDED 2026-11-03: ERPNext v16 + POS Awesome V15 (ADR-0002), conditional on the `13` §5 spike |
+| C2 | FR-INV-003 asks for WAC per (branch, unit). Odoo's AVCO is per **company**, so every branch of a tenant shares one average cost. Proposed: accept company-wide AVCO in Phase 1 (most tenants have one branch). Multi-branch operators who need per-branch cost get one company per branch (Odoo multi-company) in Phase 2. | OPEN (founder) |
+| C3 | FR-INV-031 specifies explicit `repack_out`/`repack_in` movements. In Odoo, stock is held in the base unit (kg): a bag bought as "Bag 15 kg" lands as 15 kg, and loose sales deduct kg directly, so no repack document is needed. Proposed: drop explicit repacking unless the founder needs sealed and opened bags counted separately. | ASSUMED (validate in field, `00` P6) |
+| C4 | The POS works offline from IndexedDB, but reloading or reopening it offline needs its service worker. Browsers allow that only over HTTPS or on localhost. Tablets reaching the shop PC at `http://192.168.x.x` would lose offline reload. Proposed: the on-premise installer creates a local CA and certificate and installs it on each till (task P0-7). | OPEN (spike P0-7) |
+| C1 | 2026-11-03: the founder decided to build on an existing open-source ERP/POS instead of from scratch. This supersedes T1 / ADR-0001 (the NestJS + Drizzle + React stack) and `AGENTS.md` §2 tooling, pending the choice of base. The SRS requirements and the `AGENTS.md` §1 domain invariants still apply. Evaluation: `13-open-source-base-evaluation.md`. | DECIDED 2026-11-03: Odoo 18 Community (ADR-0003, evaluation `13` §8). ERPNext (ADR-0002) superseded by T8 and B6. |

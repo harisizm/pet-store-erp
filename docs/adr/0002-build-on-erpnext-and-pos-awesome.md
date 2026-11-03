@@ -1,6 +1,8 @@
 # ADR-0002: Build on ERPNext v16 + POS Awesome V15
 
-- **Status:** accepted, conditional on the spike in `../13-open-source-base-evaluation.md` §5
+- **Status:** superseded 2026-11-03, the same day it was accepted. The founder then required a
+  Windows-native base (`00` T8) and on-premise Windows installs (`00` B6). ERPNext runs only on
+  Linux. Kept as the record of why ERPNext ranked first on features.
 - **Date:** 2026-11-03
 - **Supersedes:** ADR-0001 stack choices (`../04-architecture.md` §2–3)
 - **Requirements:** FR-POS-002, NFR-AVL-002, FR-INV-010/011, FR-CUS-002..005, FR-CAT-003,
