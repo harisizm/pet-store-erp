@@ -35,6 +35,17 @@ Git Bash rewrites any argument starting with `/` into a filesystem path.
 `MSYS_NO_PATHCONV=1` when a tool needs the slash.
 **Evidence:** `~/.claude/skills/design-fix/SKILL.md`, "Windows Git Bash" paragraph.
 
+### L-003 · 2026-11-03 · tooling · confidence: high
+**Trigger:** During the open-source base search, `gh` reported an invalid token for `harisizm`.
+Research fell back to the unauthenticated GitHub API, which allows about 60 requests/hour shared
+across parallel agents.
+**Lesson:** GitHub facts (stars, licence, push date) must be measured. That budget runs out fast
+when several agents query at once.
+**Do:** Read each repo once (`curl -s https://api.github.com/repos/OWNER/REPO`) and reuse the
+result. Ask the founder to run `gh auth login` before any large GitHub sweep. Pushing works
+regardless, through Git Credential Manager.
+**Evidence:** `gh auth status` output; `docs/13-open-source-base-evaluation.md` §2.
+
 ---
 
 ## Archive

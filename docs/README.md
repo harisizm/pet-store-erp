@@ -22,6 +22,7 @@ The first vertical pack is **Pet Retail** (pet shops, groomers, small vet pharma
 12. `10-testing-and-quality.md`
 13. `11-roadmap-and-agent-tasks.md`: phased build plan broken into agent-sized tasks.
 14. `12-glossary.md`
+15. `13-open-source-base-evaluation.md`: which open-source ERP/POS we build on, and the spike that gates it.
 
 ## Precedence when documents conflict
 `03-srs.md` > `05-data-model.md` > `04-architecture.md` > `06-api-spec.md` > others.

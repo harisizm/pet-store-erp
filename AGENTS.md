@@ -45,6 +45,7 @@ Pakistani pet shops, clone it, and build Kitaab on top of it.
 | `README`, `AGENTS`, `00`–`03` | complete |
 | `04-architecture` | complete through §6.6; truncated at §6.7, later sections missing |
 | `05`–`12` | **not received**: stubs only |
+| `13-open-source-base-evaluation` | complete; founder decision pending |
 
 Do not fill the missing docs from memory or by inference. If a task depends on them (data model,
 API spec, UX screens, roadmap), log the gap in `docs/00-assumptions-and-open-questions.md` and ask.
