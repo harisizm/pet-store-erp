@@ -1,7 +1,7 @@
 {
   "_comment": "Upstream code Hisabkar builds on (ADR-0003). Each repo is fetched at the exact commit below into vendor/<name> by scripts/setup-dev.ps1. To upgrade: change the commit, rerun the script, run the tests, and commit this file.",
   "python": "3.12",
-  "extraPythonPackages": ["requests_toolbelt"],
+  "extraPythonPackages": ["requests_toolbelt==1.0.0", "websocket-client==1.9.2"],
   "repos": [
     { "name": "odoo", "url": "https://github.com/odoo/odoo.git", "branch": "18.0", "commit": "55f9d29cd13c935226c2b6e48eb661bc89310e8b",
       "addonsPaths": ["addons", "odoo/addons"], "why": "Odoo 18 Community core (LGPL-3)" },
