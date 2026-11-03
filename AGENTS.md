@@ -10,8 +10,11 @@ the first vertical pack. The specs are in `docs/`. There is no code yet.
 The founder's decision (2026-11-03): pick a mature open-source ERP/POS from GitHub that best fits
 Pakistani pet shops, clone it, and build Kitaab on top of it.
 
-- **Current task:** choose that base. The evaluation is in
-  `docs/13-open-source-base-evaluation.md`. Nothing gets scaffolded until the founder picks.
+- **Chosen base (2026-11-03):** ERPNext v16 + POS Awesome V15
+  (`docs/adr/0002-build-on-erpnext-and-pos-awesome.md`, evaluation in
+  `docs/13-open-source-base-evaluation.md`).
+- **Next task:** the spike in `docs/13` §5 (offline 72 h, Urdu, hosting cost). No Kitaab feature
+  work starts until it passes or the fallback is chosen. Then rewrite `docs/AGENTS.md` §2 for Frappe.
 - **Effect on the specs.** `docs/03-srs.md` (what to build) still holds; the base is measured against
   it. The stack in `04-architecture.md` §2–3 and the tooling rules in `docs/AGENTS.md` §2 (NestJS,
   Drizzle, pnpm/Turborepo) are superseded by whatever the chosen base uses. The domain invariants in
@@ -45,7 +48,7 @@ Pakistani pet shops, clone it, and build Kitaab on top of it.
 | `README`, `AGENTS`, `00`–`03` | complete |
 | `04-architecture` | complete through §6.6; truncated at §6.7, later sections missing |
 | `05`–`12` | **not received**: stubs only |
-| `13-open-source-base-evaluation` | complete; founder decision pending |
+| `13-open-source-base-evaluation` | complete; base chosen (ADR-0002) |
 
 Do not fill the missing docs from memory or by inference. If a task depends on them (data model,
 API spec, UX screens, roadmap), log the gap in `docs/00-assumptions-and-open-questions.md` and ask.

@@ -1,6 +1,7 @@
 # Open-Source Base Evaluation
 
-- **Status:** recommendation made, founder decision pending (conflict C1 in `00`).
+- **Status:** the founder chose the recommendation, ERPNext v16 + POS Awesome V15, on 2026-11-03.
+  Recorded as `adr/0002`; conditional on the §5 spike.
 - **Date:** 2026-11-03.
 - **Method:** three parallel research passes: full ERP suites, standalone POS/inventory, and
   vertical/regional add-ons.

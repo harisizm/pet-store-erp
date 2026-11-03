@@ -39,4 +39,4 @@ _(Agents append here.)_
 
 | # | Conflict | Status |
 |---|---|---|
-| C1 | 2026-11-03: the founder decided to build on an existing open-source ERP/POS instead of from scratch. This supersedes T1 / ADR-0001 (the NestJS + Drizzle + React stack) and `AGENTS.md` §2 tooling, pending the choice of base. The SRS requirements and the `AGENTS.md` §1 domain invariants still apply. Evaluation: `13-open-source-base-evaluation.md`. | OPEN (base not chosen) |
+| C1 | 2026-11-03: the founder decided to build on an existing open-source ERP/POS instead of from scratch. This supersedes T1 / ADR-0001 (the NestJS + Drizzle + React stack) and `AGENTS.md` §2 tooling, pending the choice of base. The SRS requirements and the `AGENTS.md` §1 domain invariants still apply. Evaluation: `13-open-source-base-evaluation.md`. | DECIDED 2026-11-03: ERPNext v16 + POS Awesome V15 (ADR-0002), conditional on the `13` §5 spike |

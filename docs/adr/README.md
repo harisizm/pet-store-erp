@@ -4,7 +4,8 @@ One file per decision: `NNNN-kebab-title.md`, copied from `0000-template.md`. Nu
 
 | ADR | Title | Status |
 |---|---|---|
-| 0001 | Technology choices | accepted (recorded inline in `../04-architecture.md` §2) |
+| 0001 | Technology choices | superseded by 0002 (recorded inline in `../04-architecture.md` §2) |
+| 0002 | Build on ERPNext v16 + POS Awesome V15 | accepted, conditional on the spike in `../13` §5 |
 
 Pending ADRs already called for by the docs:
 - Urdu font: Noto Nastaliq Urdu vs Noto Naskh Arabic for dense UI (NFR-USE-002).
